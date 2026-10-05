@@ -38,14 +38,6 @@ describe("theme contrast", () => {
   it.each(textPairs)("%s meets 4.5:1", (_name, foreground, background) => {
     expect(contrastRatio(foreground, background)).toBeGreaterThanOrEqual(4.5);
   });
-
-  // Non-text (WCAG 1.4.11): form field borders must stand out 3:1 from the field and the form behind it.
-  it.each([
-    ["input border (muted/70) on white", blend(color.muted, color.white, 0.7), color.white],
-    ["input border (muted/70) against the paper form", blend(color.muted, color.white, 0.7), color.paper],
-  ])("%s meets 3:1", (_name, border, background) => {
-    expect(contrastRatio(border, background)).toBeGreaterThanOrEqual(3);
-  });
 });
 
 // Copper is text-safe only on light backgrounds (2.5:1 on navy). On dark sections use copper-light.

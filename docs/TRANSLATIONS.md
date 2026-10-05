@@ -10,7 +10,7 @@ the inspection step, "and registered" removed from the insurance question until 
 Drafted rows are new copy from the approved concept; please check both languages.
 Proper names and addresses (the same in both languages) and `[PLACEHOLDER]` items are not listed.
 
-## From the live site (both languages) (33)
+## From the live site (both languages) (31)
 
 Both languages come from sampayoconstruction.com (pages in the last column), lightly edited as noted above. Please confirm they still read right.
 
@@ -47,10 +47,8 @@ Both languages come from sampayoconstruction.com (pages in the last column), lig
 | `home.faq.items[4].question` | ¿Cómo conseguimos una cuadrilla para nuestro proyecto? | How do we get a crew on our project? | / (es), /home (en) |
 | `home.faq.items[4].answer` | Llame o envíe los detalles del proyecto (ubicación, alcance, tipo de cubierta y fechas objetivo) y confirmamos disponibilidad y le damos una cotización. | Call or send your project details (location, scope, deck type and target dates) and we'll confirm availability and provide a bid. | / (es), /home (en) |
 | `home.contact.heading` | Trabajemos juntos. | Let's work together. | / (es), /home (en) |
-| `home.contact.intro` | Envíenos el alcance, el tipo de cubierta y el cronograma, y confirmamos disponibilidad y le damos una cotización. | Send the scope, roof type and schedule. We'll confirm crew availability and send a quote. | / (es), /home (en). English shortened to match the concept. |
-| `home.contact.phoneLabel` | Teléfono | Phone | / (es), /home (en) |
 
-## Drafted for this site (both languages) (71)
+## Drafted for this site (both languages) (64)
 
 Written for the new site from the approved concept. Please check both languages; notes say what needs sign-off.
 
@@ -108,25 +106,18 @@ Written for the new site from the approved concept. Please check both languages;
 | `home.process.steps[1].title` | Propuesta clara | Clear proposal |  |
 | `home.process.steps[3].title` | Recorrido final | Final walkthrough |  |
 | `home.faq.heading` | Preguntas frecuentes | Common questions |  |
+| `home.contact.intro` | Llame o envíe un mensaje de texto con el alcance, el tipo de techo, la ubicación y las fechas objetivo. Confirmamos la disponibilidad de cuadrilla y le enviamos una cotización. | Call or text with the scope, roof type, location and target dates. We'll confirm crew availability and send a quote. | Adapted from the live site's contact line; lists what contractors should include. |
+| `home.contact.text` | Enviar mensaje de texto | Text |  |
+| `home.contact.email` | Correo electrónico | Email |  |
+| `home.contact.copy` | Copiar | Copy |  |
+| `home.contact.copied` | Copiado | Copied |  |
+| `home.contact.copyFailed` | No se pudo copiar. Seleccione el correo para copiarlo. | Couldn't copy. Select the address to copy it. |  |
 | `gallery[0].alt` | Techo de tejas terminado con ventilas a lo largo de la cumbrera | Finished shingle roof with vents along the ridge | Photo description |
 | `gallery[1].alt` | Instalador colocando membrana con paquetes de tejas listos en el techo | Installer laying underlayment with shingle bundles staged on the roof | Photo description |
 | `gallery[2].alt` | Cumbrera terminada al atardecer | Finished ridge line at sunset | Photo description |
 | `gallery[3].alt` | Camión grúa entregando material mientras la cuadrilla trabaja en el techo | Boom truck delivering materials while the crew works on the roof | Photo description |
 | `gallery[4].alt` | Tejas nuevas terminadas con un instalador en el alero | New shingles finished, with an installer at the eave | Photo description |
 | `gallery[5].alt` | Cuadrilla instalando membrana sobre la cubierta nueva | Crew installing underlayment over new decking | Photo description |
-| `contact.label` | Solicitud de proyecto | Project request |  |
-| `contact.fields[0].label` | Empresa | Company |  |
-| `contact.fields[1].label` | Su nombre | Your name |  |
-| `contact.fields[3].label` | Correo electrónico | Email |  |
-| `contact.fields[4].label` | Ubicación del proyecto | Project location |  |
-| `contact.fields[5].label` | Fechas objetivo | Target dates |  |
-| `contact.fields[6].label` | Alcance y tipo de techo | Scope and roof type |  |
-| `contact.optional` | opcional | optional |  |
-| `contact.honeypot` | Deje este campo vacío | Leave this field empty |  |
-| `contact.submit` | Solicitar disponibilidad | Request availability |  |
-| `contact.pending` | Enviando... | Sending... |  |
-| `contact.success` | Solicitud enviada. Le confirmaremos la disponibilidad de cuadrilla y le enviaremos una cotización. | Request sent. We'll confirm crew availability and send a quote. |  |
-| `contact.failure` | No pudimos enviar su solicitud. Llámenos al | We couldn't send your request. Please call us at |  |
 
 ## Bible verse (2)
 
@@ -137,7 +128,7 @@ Please confirm the Spanish version you want quoted (the site uses Reina-Valera 1
 | `ui.footer.verse.text` | Todo lo puedo en Cristo que me fortalece. | I can do all things through Christ who strengthens me. | es: Reina-Valera 1960 (Omar to confirm). en: NKJV, as in the approved concept. |
 | `ui.footer.verse.reference` | Filipenses 4:13 | Philippians 4:13 | Book names per version. |
 
-## Supplied by the preflight or greenlight (6)
+## Supplied by the preflight or greenlight (7)
 
 Both languages were given to us; listed so nothing is missed.
 
@@ -149,3 +140,4 @@ Both languages were given to us; listed so nothing is missed.
 | `ui.nav.faq` | Preguntas | FAQ |  |
 | `ui.nav.cta` | Solicitar disponibilidad | Request availability |  |
 | `home.hero.heading` | Techos bien hechos, siempre. | Roofing done right, every time. |  |
+| `home.contact.mailSubject` | Solicitud de proyecto | Project request |  |

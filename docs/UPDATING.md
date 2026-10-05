@@ -126,13 +126,13 @@ phone: { display: "612-840-7865", tel: "+16128407865" },
 
 Change **both**: `display` is what people see, `tel` is what the phone dials (`+1` then ten digits). The build
 stops if the two don't match. The new number appears everywhere at once: hero button, contact section,
-footer, the form's error message, the share image and the Google listing data.
+footer, the Call and Text buttons, the share image and the Google listing data.
 
 ## Set the email for project requests
 
-When Omar confirms the inbox: in `content/site.ts` set `email: "…",` and put the same address in Vercel →
-Project → Settings → Environment Variables → `CONTACT_TO_EMAIL` (once `/api/contact` is built). Delete the
-matching line in `content/pending.ts`.
+When Omar confirms the inbox: in `content/site.ts` set `email: "…",` (replacing `null`). The contact section
+then shows the address with a Copy button, and tapping it opens an email with the subject "Solicitud de
+proyecto" / "Project request". No other change needed. Delete the matching line in `content/pending.ts`.
 
 ## Edit a service, a reason, a process step or an FAQ
 

@@ -267,11 +267,20 @@ export const home = {
 
   contact: {
     heading: fromLiveSite(HOME, "Trabajemos juntos.", "Let's work together."),
-    intro: fromLiveSite(
-      `${HOME}. English shortened to match the concept.`,
-      "Envíenos el alcance, el tipo de cubierta y el cronograma, y confirmamos disponibilidad y le damos una cotización.",
-      "Send the scope, roof type and schedule. We'll confirm crew availability and send a quote.",
+    intro: drafted(
+      "Llame o envíe un mensaje de texto con el alcance, el tipo de techo, la ubicación y las fechas objetivo. Confirmamos la disponibilidad de cuadrilla y le enviamos una cotización.",
+      "Call or text with the scope, roof type, location and target dates. We'll confirm crew availability and send a quote.",
+      "Adapted from the live site's contact line; lists what contractors should include.",
     ),
-    phoneLabel: fromLiveSite(HOME, "Teléfono", "Phone"),
+    /** Labels for screen readers and the buttons; the number itself comes from content/site.ts. */
+    call: drafted("Llamar", "Call"),
+    text: drafted("Enviar mensaje de texto", "Text"),
+    email: drafted("Correo electrónico", "Email"),
+    copy: drafted("Copiar", "Copy"),
+    copied: drafted("Copiado", "Copied"),
+    /** The browser blocked the clipboard; the address is still on screen to copy by hand. */
+    copyFailed: drafted("No se pudo copiar. Seleccione el correo para copiarlo.", "Couldn't copy. Select the address to copy it."),
+    /** Subject line pre-filled when someone taps the email address. */
+    mailSubject: given("Solicitud de proyecto", "Project request"),
   },
 };

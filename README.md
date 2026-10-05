@@ -11,8 +11,8 @@ hosted on Vercel. No database, no CMS. All content is in typed files under `cont
 - **Spanish/English review list** for Omar: [`docs/TRANSLATIONS.md`](docs/TRANSLATIONS.md) (generated).
 - **Build instructions** for this version: [`docs/preflight/006-sampayo.md`](docs/preflight/006-sampayo.md)
   and its greenlight [`docs/preflight/006-greenlight.md`](docs/preflight/006-greenlight.md).
-- **Not built yet:** the `/api/contact` route that emails project requests. Until it exists, the form shows
-  its error message with the phone number (it never pretends a request was sent).
+- **No form, by design:** contractors reach Omar from the contact section by call, text or email. There is
+  no `/api/contact` route and no email service on this site.
 
 ## Prerequisites
 
@@ -41,17 +41,16 @@ Open http://localhost:3000 (Spanish) and http://localhost:3000/en (English).
 | `npm run dev` | Local dev server with live reload. |
 | `npm run build` | Production build. Runs the content check and the production gates first (see below). |
 | `npm start` | Serves the last build locally. |
-| `npm test` | All tests (Vitest): routing, language switch, form states, SEO, redirects, gates, contrast, CONTENT_ONLY. |
+| `npm test` | All tests (Vitest): routing, language switch, contact block, SEO, redirects, gates, contrast, CONTENT_ONLY. |
 | `npm run lint` | ESLint. A clean build **and** a clean lint is what `BUILD_CLEAN` means. |
 | `npm run gates` | Runs the production gates now and lists everything still missing. |
 | `npm run translations` | Rewrites `docs/TRANSLATIONS.md` from `content/`. Run it after changing any text. |
 
 ## Environment variables
 
-None are needed today. [`.env.example`](.env.example) lists, with comments, the three the contact form's email
-route will need once it's built (`RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`) and the ones
-Vercel sets by itself (`VERCEL_ENV`, `VERCEL_URL`, `VERCEL_BRANCH_URL`). Never commit a real key; `.env*`
-files other than `.env.example` are git-ignored.
+None. The site has no form and no email service. [`.env.example`](.env.example) explains the variables Vercel
+sets on its own (`VERCEL_ENV`, `VERCEL_URL`, `VERCEL_BRANCH_URL`). `.env*` files other than `.env.example` are
+git-ignored.
 
 ## Deploy
 
@@ -60,7 +59,7 @@ Vercel project under the ALC **Pro** team, connected to this GitHub repo.
 - **Any branch push** → a **preview** deployment (the staging site). Its URL appears in Vercel → Deployments
   and on the GitHub commit. Previews are hidden from search engines (`robots.txt` disallows all).
 - **`main`** → **production**.
-- Framework preset: Next.js. Build command and output: defaults. No environment variables to set yet.
+- Framework preset: Next.js. Build command and output: defaults. No environment variables to set.
 
 To publish: push a branch, check its preview **on a phone** in both languages, open a pull request into `main`,
 merge. To roll back: Vercel → Deployments → the last good production deployment → **Promote to Production**.
@@ -82,14 +81,14 @@ merge. To roll back: Vercel → Deployments → the last good production deploym
 
 The current Squarespace site renews **April 29, 2027**. Before then:
 
-1. Build and test `/api/contact` (the next preflight) and set its three environment variables in Vercel.
+1. Set Omar's email in `content/site.ts` if there is one (see `docs/UPDATING.md`).
 2. Make sure `npm run gates` passes and Omar has reviewed `docs/TRANSLATIONS.md`.
 3. Confirm `content/redirects.ts` covers every old URL still in use (business cards, QR codes, Google profile).
 4. In Vercel → Project → Settings → Domains, add `www.sampayoconstruction.com` and `sampayoconstruction.com`
    (redirect the apex to `www`, to match `site.url` in `content/site.ts`).
 5. At the domain registrar, point DNS to Vercel as the Domains screen instructs. Squarespace stays live
    until DNS switches, so there's no downtime.
-6. Check the site on a phone in both languages, send a test project request, then submit
+6. Check the site on a phone in both languages (tap Call and Text, and the email if set), then submit
    `https://www.sampayoconstruction.com/sitemap.xml` in Google Search Console.
 7. Cancel the Squarespace plan only after the new site has been live and checked.
 
@@ -102,7 +101,6 @@ content/        All business facts and every piece of text, typed. Edit these, n
   site.ts         Name, wordmark, phone, contact person, email, social and video links, license, areas served
   home.ts         Every home-page section: hero, trust row, services, why us, gallery text, process, FAQ, contact
   gallery.ts      The job photos in "Our work", with the original file name on the old site
-  contact.ts      Project request form: fields, labels, required/optional, messages
   ui.ts           Header, language switch, footer (Philippians 4:13, credit), 404, page title
   redirects.ts    Old Squarespace URLs → new sections (301)
   pending.ts      Open questions; each one blocks production until answered
@@ -142,12 +140,13 @@ The two route groups are named by **role**, not language: `app/(default)/page.ts
 pieces as Casa del Cordero (route table, two root layouts, `t()` with no fallback, `LangSwitch`, the gates),
 with role-named folders so the default language is one value.
 
-### Contact form
+### Contact section (no form)
 
-`components/ContactForm.tsx` posts JSON to `/api/contact` (fields from `content/contact.ts`, the page language,
-and a hidden `website` honeypot). It shows "Sending..." while waiting, success **only** when the route answers
-2xx with `{ "ok": true }`, and otherwise an error with the tap-to-call phone number, keeping what was typed.
-The payload and reply types are in `lib/contact.ts` for whoever builds the route.
+`components/home/Contact.tsx` shows Omar's name and number with **Call** (`tel:`) and **Text** (`sms:`, the same
+number). Once `content/site.ts` has an `email`, it also shows the address as text (a `mailto:` link with the
+subject "Solicitud de proyecto" / "Project request") and a **Copy** button that says "Copiado" / "Copied" (or
+that the browser blocked the clipboard). While `email` is `null`, that row doesn't render. The copy for all of
+it is in `content/home.ts` under `contact`.
 
 ### Updating each file in `content/`
 
