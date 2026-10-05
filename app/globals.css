@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* Values come from theme/tokens.ts (set on <html> in the root layouts); this only names them for Tailwind. */
+@theme inline {
+  --color-navy: var(--theme-navy);
+  --color-navy-deep: var(--theme-navy-deep);
+  --color-copper: var(--theme-copper);
+  --color-copper-light: var(--theme-copper-light);
+  --color-paper: var(--theme-paper);
+  --color-stone: var(--theme-stone);
+  --color-line: var(--theme-line);
+  --color-ink: var(--theme-ink);
+  --color-muted: var(--theme-muted);
+  --color-alert: var(--theme-alert);
+  --color-white: var(--theme-white);
+  --radius-sm: var(--theme-radius-sm);
+  --radius-md: var(--theme-radius-md);
+  --radius-lg: var(--theme-radius-lg);
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-white);
+  font-family: var(--font-sans);
+}
+
+/* Keep in-page anchors clear of the sticky header. */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-copper);
+  outline-offset: 3px;
+}
+
+/* On dark sections copper is too faint; use the light copper. */
+.on-dark :focus-visible {
+  outline-color: var(--color-copper-light);
+}
