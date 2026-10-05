@@ -6,6 +6,7 @@ import { Process } from "@/components/home/Process";
 import { Services } from "@/components/home/Services";
 import { TrustRow } from "@/components/home/TrustRow";
 import { WhyUs } from "@/components/home/WhyUs";
+import { BusinessJsonLd } from "@/components/BusinessJsonLd";
 import { PageShell } from "@/components/PageShell";
 import type { Locale } from "@/content/types";
 
@@ -13,6 +14,7 @@ import type { Locale } from "@/content/types";
 export function HomePage({ locale }: { locale: Locale }) {
   return (
     <PageShell route="home" locale={locale}>
+      <BusinessJsonLd locale={locale} />
       <Hero locale={locale} />
       <TrustRow locale={locale} />
       <Services locale={locale} />

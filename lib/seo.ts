@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { site, type SiteContent } from "@/content/site";
-import { defaultLocale, type Locale, type Text } from "@/content/types";
+import { defaultLocale, locales, type Locale, type Text } from "@/content/types";
 import { ui } from "@/content/ui";
 import { localeTag, t } from "@/lib/i18n";
-import { otherLocale, routes, type RouteKey } from "@/lib/routes";
+import { otherLocale, routeKeys, routes, type RouteKey } from "@/lib/routes";
 
 type VercelEnv = Partial<Record<"VERCEL_ENV" | "VERCEL_BRANCH_URL" | "VERCEL_URL", string>> & Record<string, string | undefined>;
 
@@ -40,15 +40,19 @@ export function rootMetadata(locale: Locale): Metadata {
   };
 }
 
+/** Share images, served by app/og/[locale]/route.tsx. */
+export const ogImagePath: Record<Locale, string> = { es: "/og/es", en: "/og/en" };
+
 const ogLocale = (locale: Locale) => localeTag[locale].replace("-", "_");
 
 /**
- * Metadata for one page in one language: title, description, canonical, hreflang and Open Graph locale.
- * Next.js replaces (not merges) a parent's openGraph object, so every page sets all of it here.
+ * Full metadata for one page in one language: title, description, canonical, hreflang, Open Graph and
+ * Twitter. Next.js replaces (not merges) a parent's openGraph and twitter objects, so every page sets all of them here.
  */
 export function pageMetadata(route: RouteKey, locale: Locale): Metadata {
   const { title, description } = pageText[route];
   const fullTitle = `${site.name} | ${t(title, locale)}`;
+  const image = { url: ogImagePath[locale], width: 1200, height: 630, type: "image/png", alt: site.legalName };
 
   return {
     title: { absolute: fullTitle },
@@ -62,6 +66,49 @@ export function pageMetadata(route: RouteKey, locale: Locale): Metadata {
       type: "website",
       locale: ogLocale(locale),
       alternateLocale: [ogLocale(otherLocale(locale))],
+      images: [image],
     },
+    twitter: { card: "summary_large_image", title: fullTitle, description: t(description, locale), images: [image] },
   };
+}
+
+/** Every page in both languages, each listing its translation, for app/sitemap.ts. */
+export function sitemapEntries(origin: string) {
+  return routeKeys.flatMap((route) =>
+    locales.map((locale) => ({
+      url: absoluteUrl(origin, routes[route][locale]),
+      alternates: { languages: { es: absoluteUrl(origin, routes[route].es), en: absoluteUrl(origin, routes[route].en) } },
+    })),
+  );
+}
+
+/**
+ * schema.org RoofingContractor, built only from content. No street address (none is published):
+ * areaServed instead. Email, social links and license appear only once content/site.ts has them.
+ */
+export function buildBusinessJsonLd(locale: Locale, origin: string, content: SiteContent = site) {
+  const sameAs = [...Object.values(content.social), content.videosUrl].filter((link): link is string => Boolean(link));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "RoofingContractor",
+    "@id": `${absoluteUrl(origin, "/")}#business`,
+    name: content.legalName,
+    alternateName: content.name,
+    description: t(content.description, locale),
+    url: absoluteUrl(origin, routes.home[locale]),
+    inLanguage: localeTag[locale],
+    telephone: content.phone.tel,
+    areaServed: content.areaServedPlaces.map((place) => ({ "@type": place.type, name: place.name })),
+    knowsLanguage: locales.map((code) => localeTag[code]),
+    image: absoluteUrl(origin, ogImagePath[locale]),
+    ...(content.email ? { email: content.email } : {}),
+    ...(content.licenseNumber ? { hasCredential: { "@type": "EducationalOccupationalCredential", credentialCategory: "license", identifier: content.licenseNumber } } : {}),
+    ...(sameAs.length > 0 ? { sameAs } : {}),
+  };
+}
+
+/** JSON for a <script type="application/ld+json">, with `<` escaped so content can't close the tag. */
+export function serializeJsonLd(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
 }

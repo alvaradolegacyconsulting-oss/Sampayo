@@ -4,6 +4,7 @@ import { contact } from "./contact";
 import { gallery } from "./gallery";
 import { home } from "./home";
 import { openQuestions } from "./pending";
+import { pendingRedirects, redirects } from "./redirects";
 import { site } from "./site";
 import { ui } from "./ui";
 
@@ -13,5 +14,7 @@ export const content = {
   home,
   gallery,
   contact,
+  redirects,
+  pendingRedirects,
   openQuestions,
 };
