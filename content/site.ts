@@ -6,6 +6,8 @@ export type SiteContent = {
   /** Short name for titles and the wordmark. */
   name: string;
   legalName: string;
+  /** Text logo until the real one arrives: big first line, small second line. */
+  wordmark: { main: string; sub: string };
   description: Text;
   phone: { display: string; tel: string };
   /** The person contractors talk to. */
@@ -28,6 +30,7 @@ export const site: SiteContent = {
   url: "https://www.sampayoconstruction.com",
   name: "Sampayo Construction",
   legalName: "Sampayo Construction, LLP",
+  wordmark: { main: "Sampayo", sub: "Construction, LLP" },
   description: drafted(
     "Subcontratista de techado para contratistas generales y constructores en Minnesota. Remociones, instalaciones nuevas, reparaciones y trabajo por volumen de tormentas, con seguro y a tiempo.",
     "Roofing subcontractor for general contractors and builders in Minnesota. Tear-offs, new installs, repairs and storm volume work, insured and on schedule.",

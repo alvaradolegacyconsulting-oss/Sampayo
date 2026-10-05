@@ -6,7 +6,6 @@ export const ui = {
     skipToContent: drafted("Saltar al contenido", "Skip to content"),
     homeLink: drafted("Sampayo Construction, inicio", "Sampayo Construction home"),
     opensInNewTab: drafted("(se abre en una pestaña nueva)", "(opens in a new tab)"),
-    wordmarkSuffix: name("Construction, LLP"),
   },
   nav: {
     label: drafted("Navegación principal", "Main navigation"),
