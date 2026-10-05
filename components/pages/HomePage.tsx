@@ -1,5 +1,7 @@
+import { Faq } from "@/components/home/Faq";
 import { Gallery } from "@/components/home/Gallery";
 import { Hero } from "@/components/home/Hero";
+import { Process } from "@/components/home/Process";
 import { Services } from "@/components/home/Services";
 import { TrustRow } from "@/components/home/TrustRow";
 import { WhyUs } from "@/components/home/WhyUs";
@@ -15,6 +17,8 @@ export function HomePage({ locale }: { locale: Locale }) {
       <Services locale={locale} />
       <WhyUs locale={locale} />
       <Gallery locale={locale} />
+      <Process locale={locale} />
+      <Faq locale={locale} />
     </PageShell>
   );
 }
