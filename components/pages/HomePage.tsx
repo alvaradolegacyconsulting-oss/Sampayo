@@ -1,3 +1,4 @@
+import { Contact } from "@/components/home/Contact";
 import { Faq } from "@/components/home/Faq";
 import { Gallery } from "@/components/home/Gallery";
 import { Hero } from "@/components/home/Hero";
@@ -19,6 +20,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <Gallery locale={locale} />
       <Process locale={locale} />
       <Faq locale={locale} />
+      <Contact locale={locale} />
     </PageShell>
   );
 }
