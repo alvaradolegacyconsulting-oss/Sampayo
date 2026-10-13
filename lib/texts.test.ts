@@ -21,7 +21,7 @@ describe("docs/TRANSLATIONS.md", () => {
 
   it("lists drafted and live-site strings but not names or placeholders", () => {
     const rows = doc.split("\n").filter((line) => line.startsWith("| `"));
-    expect(rows.some((row) => row.includes("Techos bien hechos, siempre."))).toBe(true);
+    expect(rows.some((row) => row.includes("Roofing crews Minnesota contractors can count on."))).toBe(true);
     expect(rows.some((row) => row.includes("¿Qué áreas cubren?"))).toBe(true);
     expect(rows.filter((row) => row.includes(`| ${name("Facebook").es} |`))).toEqual([]);
     expect(rows.filter((row) => row.includes("[PLACEHOLDER"))).toEqual([]);

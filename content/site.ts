@@ -1,4 +1,4 @@
-import { drafted, fromLiveSite, type Text } from "./types";
+import { drafted, type Text } from "./types";
 
 export type SiteContent = {
   /** Production origin, https and no trailing slash. */
@@ -18,7 +18,7 @@ export type SiteContent = {
   social: { facebook: string | null; instagram: string | null; youtube: string | null; tiktok: string | null };
   /** "Watch project videos" in the gallery appears only once this is set. */
   videosUrl: string | null;
-  /** Minnesota contractor license number, if Omar has one to show. */
+  /** Minnesota contractor license number. Not shown (Jose, Oct 13): leave null, and claim no license in copy. */
   licenseNumber: string | null;
   /** Where Sampayo works, as people read it. */
   areaServed: Text;
@@ -32,9 +32,9 @@ export const site: SiteContent = {
   legalName: "Sampayo Construction, LLP",
   wordmark: { main: "Sampayo", sub: "Construction, LLP" },
   description: drafted(
-    "Subcontratista de techado para contratistas generales y constructores en Minnesota. Remociones, instalaciones nuevas, reparaciones y trabajo por volumen de tormentas, con seguro y a tiempo.",
-    "Roofing subcontractor for general contractors and builders in Minnesota. Tear-offs, new installs, repairs and storm volume work, insured and on schedule.",
-    "Meta description. Adapted from the live site's; 'registered' dropped until the license question is answered.",
+    "Subcontratista de techado para contratistas generales y constructores en las Ciudades Gemelas. Remociones, instalaciones nuevas, reparaciones y trabajo por volumen de tormentas, con seguro y a tiempo.",
+    "Roofing subcontractor for general contractors and builders in the Twin Cities. Tear-offs, new installs, repairs and storm volume work, insured and on schedule.",
+    "Meta description. Adapted from the live site's; no license or registration is claimed (Jose, Oct 13).",
   ),
   phone: { display: "612-840-7865", tel: "+16128407865" },
   contactName: "Omar Sampayo",
@@ -42,14 +42,9 @@ export const site: SiteContent = {
   social: { facebook: null, instagram: null, youtube: null, tiktok: null },
   videosUrl: null,
   licenseNumber: null,
-  areaServed: fromLiveSite(
-    "/, /home (FAQ). Omar to confirm.",
-    "El área metropolitana de Minneapolis–St. Paul y el resto de Minnesota",
-    "The Minneapolis–St. Paul metro and greater Minnesota",
-  ),
+  areaServed: drafted("El área metropolitana de las Ciudades Gemelas", "The Twin Cities metro", "Jose, Oct 13 (greenlight 006-B)."),
   areaServedPlaces: [
     { type: "City", name: "Minneapolis" },
     { type: "City", name: "Saint Paul" },
-    { type: "State", name: "Minnesota" },
   ],
 };

@@ -5,4 +5,6 @@ export const translationNotes: string[] = [
   "Teléfono), em dashes rewritten, homeowner wording dropped (contractors only), drone imagery removed from",
   "the inspection step, \"and registered\" removed from the insurance question until the license is confirmed.",
   "Drafted rows are new copy from the approved concept; please check both languages.",
+  "Greenlight 006-B (Oct 13) rewrote most sections for general contractors in the Twin Cities: those rows' English",
+  "comes from the greenlight and the Spanish is drafted, so the Spanish needs the closest read.",
 ];

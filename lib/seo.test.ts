@@ -52,7 +52,6 @@ describe("RoofingContractor JSON-LD", () => {
     expect(jsonLd.areaServed).toEqual([
       { "@type": "City", name: "Minneapolis" },
       { "@type": "City", name: "Saint Paul" },
-      { "@type": "State", name: "Minnesota" },
     ]);
     expect(jsonLd.knowsLanguage).toEqual(["es-US", "en-US"]);
     expect("address" in jsonLd).toBe(false);
