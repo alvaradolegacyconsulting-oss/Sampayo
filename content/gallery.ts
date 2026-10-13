@@ -12,6 +12,7 @@ const photo = (file: string, source: string, es: string, en: string): GalleryPho
   alt: drafted(es, en, "Photo description"),
   width: 1600,
   height: 1200,
+  kind: "real",
   source,
 });
 

@@ -19,6 +19,7 @@ const servicePhoto = (file: string, es: string, en: string): Photo => ({
   alt: drafted(es, en, "Photo description"),
   width: 1600,
   height: 1200,
+  kind: "real",
 });
 
 // Greenlight 006-B gives the English for most sections; the Spanish is drafted for Omar's review.
@@ -41,6 +42,7 @@ export const home = {
       alt: drafted("Cuadrilla de Sampayo trabajando en un techo", "Sampayo crew working on a roof"),
       width: 1600,
       height: 1200,
+      kind: "real",
     } satisfies Photo,
   },
 
@@ -121,9 +123,11 @@ export const home = {
         ),
         photo: {
           src: placeholder("gutter photo (none in the live gallery)").en,
-          alt: drafted("Canaletas sin costuras instaladas por Sampayo", "Seamless gutters installed by Sampayo"),
+          // A licensed stock photo stands in here (greenlight 006-B), so the alt describes the photo, not Sampayo's work.
+          alt: drafted("Canaletas y bajantes en el alero de una casa", "Gutters and downspouts along the eave of a house"),
           width: 1600,
           height: 1200,
+          kind: "stock",
         },
       },
     ] satisfies ServiceItem[],

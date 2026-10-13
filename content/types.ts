@@ -50,5 +50,22 @@ export const isPlaceholder = (value: string): boolean => value.startsWith(PLACEH
 /**
  * A photo. Until the real one arrives, `src` is a "[PLACEHOLDER: …]" string and the
  * page shows a labelled box instead. Real photos go in public/images/ (src "/images/…").
+ * Stock stand-ins are allowed; the production gate lists every one (STOCK_IN_USE) until a real
+ * photo replaces it.
  */
-export type Photo = { src: string; alt: Text; width: number; height: number };
+export type Photo = {
+  src: string;
+  /** Describes what is in the picture. A stock photo's alt never claims it shows Sampayo's crew or work. */
+  alt: Text;
+  width: number;
+  height: number;
+  /** "real": Sampayo's own job or crew photo. "stock": a licensed stand-in. */
+  kind: "real" | "stock";
+  /** Where a stock photo was licensed from (the photo's page on the stock site). */
+  sourceUrl?: string;
+};
+
+/** No photo, on purpose: the slot renders without one. Not a placeholder, so it doesn't block production. */
+export type NoPhoto = { kind: "none" };
+
+export const hasPhoto = (photo: Photo | NoPhoto): photo is Photo => photo.kind !== "none";
