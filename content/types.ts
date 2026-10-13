@@ -7,7 +7,7 @@ export type Locale = (typeof locales)[number];
  * THE language switch. The default language is served at "/", the other one at "/en" (or "/es").
  * Change this one value and routes, hreflang, x-default, the sitemap and the old-URL redirects all follow.
  */
-export const defaultLocale: Locale = "es";
+export const defaultLocale: Locale = "en";
 
 /**
  * Where a piece of text came from. docs/TRANSLATIONS.md is generated from this

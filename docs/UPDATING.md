@@ -28,7 +28,7 @@ Run these one at a time in the terminal (zsh). Use **single quotes** around a co
 2. **Make the edit** described below, in VS Code. Keep the quotes, commas and brackets exactly as in the examples.
 3. **Update the review list:** `npm run translations` (rewrites `docs/TRANSLATIONS.md`).
 4. **Check it:** `npm test`, then `npm run build`. If something is wrong, the build stops and says what to fix.
-   For a look first, run `npm run dev` and open http://localhost:3000 (Spanish) and http://localhost:3000/en.
+   For a look first, run `npm run dev` and open http://localhost:3000 (English) and http://localhost:3000/es.
 5. **Commit and push:**
    ```zsh
    git add -A
@@ -142,9 +142,8 @@ no homeowner offers ("free consultation", "upgrade your roof").
 
 ## Switch which language comes first
 
-File: `content/types.ts`. Change `export const defaultLocale: Locale = "es";` to `"en"`. English moves to `/`
-and Spanish to `/es`; links, the language switch and the old-URL redirects follow by themselves. Delete the
-default-language line in `content/pending.ts`.
+File: `content/types.ts`. English is first today. To change it, edit `export const defaultLocale: Locale = "en";` to `"es"`. Spanish
+moves to `/` and English to `/en`; links, the language switch and the old-URL redirects follow by themselves.
 
 ## Answer an open question
 

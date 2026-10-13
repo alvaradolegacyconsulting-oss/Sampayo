@@ -1,7 +1,7 @@
 # Sampayo Construction website
 
 Bilingual website for Sampayo Construction, LLP, a roofing subcontractor for general contractors and builders
-in Minnesota. Spanish is the default language at `/`; English is at `/en`. One setting swaps them (see
+in Minnesota. English is the default language at `/`; Spanish is at `/es`. One setting swaps them (see
 [Default language](#default-language-the-one-switch)).
 
 Built and maintained by Alvarado Legacy Consulting. Stack: Next.js (App Router), TypeScript, Tailwind CSS,
@@ -32,7 +32,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000 (Spanish) and http://localhost:3000/en (English).
+Open http://localhost:3000 (English) and http://localhost:3000/es (Spanish).
 
 ## Scripts
 
@@ -110,7 +110,7 @@ components/     Generic, content-driven; no business facts (a test checks this: 
   home/           One component per home-page section
 app/
   (default)/      The default language at "/", with its own <html lang>
-  (alternate)/[alt]/   The other language at "/en" (only that value; anything else is a 404)
+  (alternate)/[alt]/   The other language at "/es" (only that value; anything else is a 404)
   og/[locale]/    Share images (/og/es, /og/en)
   global-not-found.tsx   Bilingual 404
 lib/            routes (the one route table), i18n, seo (metadata, sitemap, JSON-LD), contact, gates, redirects
@@ -121,19 +121,19 @@ public/images/  Job photos (services/, gallery/)
 
 ### Default language: the one switch
 
-`content/types.ts` has `export const defaultLocale: Locale = "es";`. That value decides everything:
+`content/types.ts` has `export const defaultLocale: Locale = "en";`. That value decides everything:
 
-- Spanish at `/` and English at `/en` (today), or, with `"en"`, English at `/` and Spanish at `/es`.
+- English at `/` and Spanish at `/es` (today, Jose's decision of Oct 13), or, with `"es"`, Spanish at `/` and English at `/en`.
 - The ES | EN switch, `hreflang` and `x-default`, the sitemap, the 404 page's language order, and the old-URL
   redirects (the old English pages always land on the English page) all follow it.
 
-To switch to English first: change `"es"` to `"en"`, run `npm test` and `npm run build`, check the preview,
+To switch to Spanish first: change `"en"` to `"es"`, run `npm test` and `npm run build`, check the preview,
 merge. Nothing else to edit. (`lib/routes.test.ts` checks the route table for both settings.)
 
 ### Bilingual routing
 
 `lib/routes.ts` is the single route table, built from `defaultLocale`. The site is one page per language; the
-nav links are sections of that page, with anchors translated per language (`/#servicios`, `/en#services`).
+nav links are sections of that page, with anchors translated per language (`/#services`, `/es#servicios`).
 The two route groups are named by **role**, not language: `app/(default)/page.tsx` renders
 `<HomePage locale={defaultLocale} />` and `app/(alternate)/[alt]/page.tsx` renders the other language, with
 `generateStaticParams` returning only that language and `dynamicParams = false`. This is the same set of

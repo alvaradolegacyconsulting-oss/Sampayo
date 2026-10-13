@@ -3,7 +3,6 @@
  * (PLACEHOLDERS_RESOLVED). Delete a line once it's answered and the answer is in content/.
  */
 export const openQuestions: string[] = [
-  "[PLACEHOLDER: default language: keep Spanish at /, or English? (content/types.ts defaultLocale)]",
   "[PLACEHOLDER: areas covered: confirm the live-site wording (content/site.ts areaServed and the FAQ)]",
   "[PLACEHOLDER: Minnesota contractor license number, if any (content/site.ts licenseNumber)]",
   "[PLACEHOLDER: drone inspections yes/no (left out of the process until confirmed)]",
