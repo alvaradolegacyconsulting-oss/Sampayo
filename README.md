@@ -8,7 +8,7 @@ Built and maintained by Alvarado Legacy Consulting. Stack: Next.js (App Router),
 hosted on Vercel. No database, no CMS. All content is in typed files under `content/`.
 
 - **Everyday edits** (photos, links, text, FAQ): see [`docs/UPDATING.md`](docs/UPDATING.md).
-- **Spanish/English review list** for Omar: [`docs/TRANSLATIONS.md`](docs/TRANSLATIONS.md) (generated).
+- **English/Spanish review page** for Omar: [`docs/REVIEW.md`](docs/REVIEW.md) (generated).
 - **Build instructions** for this version: [`docs/preflight/006-sampayo.md`](docs/preflight/006-sampayo.md)
   and its greenlight [`docs/preflight/006-greenlight.md`](docs/preflight/006-greenlight.md).
 - **No form and no email, by design:** contractors reach Omar from the contact section by call or text (Omar
@@ -44,7 +44,7 @@ Open http://localhost:3000 (English) and http://localhost:3000/es (Spanish).
 | `npm test` | All tests (Vitest): routing, language switch, contact block, SEO, redirects, gates, contrast, CONTENT_ONLY. |
 | `npm run lint` | ESLint. A clean build **and** a clean lint is what `BUILD_CLEAN` means. |
 | `npm run gates` | Runs the production gates now and lists everything still missing. |
-| `npm run translations` | Rewrites `docs/TRANSLATIONS.md` from `content/`. Run it after changing any text. |
+| `npm run review` | Rewrites `docs/REVIEW.md` from `content/`. Run it after changing any text. |
 
 ## Environment variables
 
@@ -81,7 +81,7 @@ merge. To roll back: Vercel → Deployments → the last good production deploym
 
 The current Squarespace site renews **April 29, 2027**. Before then:
 
-1. Make sure `npm run gates` passes and Omar has reviewed `docs/TRANSLATIONS.md`.
+1. Make sure `npm run gates` passes and Omar has reviewed `docs/REVIEW.md`.
 2. Confirm `content/redirects.ts` covers every old URL still in use (business cards, QR codes, Google profile).
 3. In Vercel → Project → Settings → Domains, add `www.sampayoconstruction.com` and `sampayoconstruction.com`
    (redirect the apex to `www`, to match `site.url` in `content/site.ts`).
@@ -114,7 +114,7 @@ app/
   global-not-found.tsx   Bilingual 404
 lib/            routes (the one route table), i18n, seo (metadata, sitemap, JSON-LD), contact, gates, redirects
 scripts/        check-content.ts, check-production-gates.ts, translations-doc.ts
-docs/           UPDATING.md, TRANSLATIONS.md, preflight/, concept/
+docs/           UPDATING.md, REVIEW.md, preflight/, concept/
 public/images/  Job photos (services/, gallery/)
 ```
 
@@ -154,6 +154,6 @@ The recurring edits are written up step by step in [`docs/UPDATING.md`](docs/UPD
 
 - Every visible string is `{ es, en }`; write both. Use `given("Español", "English")` for text Omar supplied
   and `drafted(...)` for text you wrote or translated (it's listed for review).
-- After changing text, run `npm run translations` and commit `docs/TRANSLATIONS.md` too (`npm test` checks it).
+- After changing text, run `npm run review` and commit `docs/REVIEW.md` too (`npm test` checks it).
 - Never invent a fact. If you don't know it yet, use `placeholder("what's missing")` or leave the value `null`;
   production won't build while a placeholder remains, and the page shows it so it's obvious on a preview.

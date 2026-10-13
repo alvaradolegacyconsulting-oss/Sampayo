@@ -11,7 +11,7 @@ given("Reemplazo de techo", "Roof replacement")
 ```
 
 - `given(...)`: Omar sent you both languages. Use this when you can.
-- `drafted(...)`: you wrote or translated it yourself. It gets listed in `docs/TRANSLATIONS.md` for review.
+- `drafted(...)`: you wrote or translated it yourself. It gets listed in `docs/REVIEW.md` for Omar to review.
 - Never leave one language empty, and never paste the same English into both. A missing language stops the
   production deploy; the site never quietly shows the other language.
 
@@ -26,7 +26,7 @@ Run these one at a time in the terminal (zsh). Use **single quotes** around a co
    git checkout -b content/short-description
    ```
 2. **Make the edit** described below, in VS Code. Keep the quotes, commas and brackets exactly as in the examples.
-3. **Update the review list:** `npm run translations` (rewrites `docs/TRANSLATIONS.md`).
+3. **Update the review list:** `npm run review` (rewrites `docs/REVIEW.md`).
 4. **Check it:** `npm test`, then `npm run build`. If something is wrong, the build stops and says what to fix.
    For a look first, run `npm run dev` and open http://localhost:3000 (English) and http://localhost:3000/es.
 5. **Commit and push:**
@@ -149,5 +149,5 @@ moves to `/` and English to `/en`; links, the language switch and the old-URL re
 ## Answer an open question
 
 Each line in `content/pending.ts` blocks the production deploy. Put the answer where it belongs in `content/`
-(the line names the file), then delete the line. When Omar has checked `docs/TRANSLATIONS.md`, apply the
-corrections in the files it names, run `npm run translations`, and delete that line too.
+(the line names the file), then delete the line. When Omar has checked `docs/REVIEW.md`, apply the
+corrections in the files it names, run `npm run review`, and delete that line too.

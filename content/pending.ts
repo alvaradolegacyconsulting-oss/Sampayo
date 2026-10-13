@@ -7,6 +7,6 @@ export const openQuestions: string[] = [
   "[PLACEHOLDER: project video link (content/site.ts videosUrl)]",
   "[PLACEHOLDER: logo file: is Logo+Verse+English.jpg from the live site the logo? (text wordmark until then)]",
   "[PLACEHOLDER: team photo]",
-  "[PLACEHOLDER: Spanish and English reviewed by Omar (docs/TRANSLATIONS.md)]",
+  "[PLACEHOLDER: Spanish and English reviewed by Omar (docs/REVIEW.md)]",
   "[PLACEHOLDER: Philippians 4:13 in Spanish: confirm Reina-Valera 1960 (content/ui.ts footer.verse)]",
 ];

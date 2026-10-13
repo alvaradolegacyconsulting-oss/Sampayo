@@ -10,8 +10,8 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
 
 /**
- * Where a piece of text came from. docs/TRANSLATIONS.md is generated from this
- * (npm run translations), so Omar can review everything that was drafted.
+ * Where a piece of text came from. docs/REVIEW.md (npm run review) lists every text except proper
+ * names and placeholders, so Omar can review everything that was drafted.
  */
 export type TextSource =
   | "drafted" // both languages written for this site from the approved concept; Omar to review
