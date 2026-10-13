@@ -11,8 +11,8 @@ hosted on Vercel. No database, no CMS. All content is in typed files under `cont
 - **Spanish/English review list** for Omar: [`docs/TRANSLATIONS.md`](docs/TRANSLATIONS.md) (generated).
 - **Build instructions** for this version: [`docs/preflight/006-sampayo.md`](docs/preflight/006-sampayo.md)
   and its greenlight [`docs/preflight/006-greenlight.md`](docs/preflight/006-greenlight.md).
-- **No form, by design:** contractors reach Omar from the contact section by call, text or email. There is
-  no `/api/contact` route and no email service on this site.
+- **No form and no email, by design:** contractors reach Omar from the contact section by call or text (Omar
+  prefers calls). There is no `/api/contact` route and no email service on this site.
 
 ## Prerequisites
 
@@ -81,16 +81,15 @@ merge. To roll back: Vercel → Deployments → the last good production deploym
 
 The current Squarespace site renews **April 29, 2027**. Before then:
 
-1. Set Omar's email in `content/site.ts` if there is one (see `docs/UPDATING.md`).
-2. Make sure `npm run gates` passes and Omar has reviewed `docs/TRANSLATIONS.md`.
-3. Confirm `content/redirects.ts` covers every old URL still in use (business cards, QR codes, Google profile).
-4. In Vercel → Project → Settings → Domains, add `www.sampayoconstruction.com` and `sampayoconstruction.com`
+1. Make sure `npm run gates` passes and Omar has reviewed `docs/TRANSLATIONS.md`.
+2. Confirm `content/redirects.ts` covers every old URL still in use (business cards, QR codes, Google profile).
+3. In Vercel → Project → Settings → Domains, add `www.sampayoconstruction.com` and `sampayoconstruction.com`
    (redirect the apex to `www`, to match `site.url` in `content/site.ts`).
-5. At the domain registrar, point DNS to Vercel as the Domains screen instructs. Squarespace stays live
+4. At the domain registrar, point DNS to Vercel as the Domains screen instructs. Squarespace stays live
    until DNS switches, so there's no downtime.
-6. Check the site on a phone in both languages (tap Call and Text, and the email if set), then submit
+5. Check the site on a phone in both languages (tap Call and Text), then submit
    `https://www.sampayoconstruction.com/sitemap.xml` in Google Search Console.
-7. Cancel the Squarespace plan only after the new site has been live and checked.
+6. Cancel the Squarespace plan only after the new site has been live and checked.
 
 ## How it's put together
 
@@ -143,9 +142,10 @@ with role-named folders so the default language is one value.
 ### Contact section (no form)
 
 `components/home/Contact.tsx` shows Omar's name and number with **Call** (`tel:`) and **Text** (`sms:`, the same
-number). Once `content/site.ts` has an `email`, it also shows the address as text (a `mailto:` link with the
-subject "Solicitud de proyecto" / "Project request") and a **Copy** button that says "Copiado" / "Copied" (or
-that the browser blocked the clipboard). While `email` is `null`, that row doesn't render. The copy for all of
+number). `content/site.ts` has `email: { kind: "none" }` on purpose (Omar prefers calls), so there is no email
+row. If an address is ever set there, the section also shows it as text (a `mailto:` link with the subject
+"Solicitud de proyecto" / "Project request") and a **Copy** button that says "Copiado" / "Copied" (or that the
+browser blocked the clipboard). The copy for all of
 it is in `content/home.ts` under `contact`.
 
 ### Updating each file in `content/`

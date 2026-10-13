@@ -128,11 +128,12 @@ Change **both**: `display` is what people see, `tel` is what the phone dials (`+
 stops if the two don't match. The new number appears everywhere at once: hero button, contact section,
 footer, the Call and Text buttons, the share image and the Google listing data.
 
-## Set the email for project requests
+## Add an email for project requests (only if Omar asks)
 
-When Omar confirms the inbox: in `content/site.ts` set `email: "…",` (replacing `null`). The contact section
+Today the site has no email on purpose: Omar prefers calls, so contractors call or text. If that changes, in
+`content/site.ts` replace `email: { kind: "none", … },` with `email: "the@address.com",`. The contact section
 then shows the address with a Copy button, and tapping it opens an email with the subject "Solicitud de
-proyecto" / "Project request". No other change needed. Delete the matching line in `content/pending.ts`.
+proyecto" / "Project request". No other change needed.
 
 ## Edit a service, a reason, a process step or an FAQ
 

@@ -12,7 +12,7 @@ export function findSiteProblems(site: SiteContent): string[] {
   if (site.phone.tel.slice(-10) !== site.phone.display.replace(/\D/g, "")) {
     problems.push(`site.phone.display "${site.phone.display}" and site.phone.tel "${site.phone.tel}" are different numbers`);
   }
-  if (site.email !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(site.email)) problems.push(`site.email "${site.email}" is not an email address (or null)`);
+  if (typeof site.email === "string" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(site.email)) problems.push(`site.email "${site.email}" is not an email address (or { kind: "none" })`);
   const links = { ...site.social, videosUrl: site.videosUrl };
   for (const [key, value] of Object.entries(links)) {
     if (value !== null && !value.startsWith("https://")) problems.push(`site link ${key} "${value}" must start with https:// (or be null)`);

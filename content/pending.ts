@@ -3,7 +3,6 @@
  * (PLACEHOLDERS_RESOLVED). Delete a line once it's answered and the answer is in content/.
  */
 export const openQuestions: string[] = [
-  "[PLACEHOLDER: email for project requests (content/site.ts email; shown in the contact section once set)]",
   "[PLACEHOLDER: social links: Facebook, Instagram, YouTube, TikTok (content/site.ts social)]",
   "[PLACEHOLDER: project video link (content/site.ts videosUrl)]",
   "[PLACEHOLDER: logo file: is Logo+Verse+English.jpg from the live site the logo? (text wordmark until then)]",

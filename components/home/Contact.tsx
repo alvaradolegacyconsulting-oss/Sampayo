@@ -2,19 +2,21 @@ import { buttonClasses } from "@/components/ButtonLink";
 import { CopyButton } from "@/components/CopyButton";
 import { Container, headingClasses } from "@/components/Section";
 import { home } from "@/content/home";
-import { site, type SiteContent } from "@/content/site";
+import { emailAddress, site, type SiteContent } from "@/content/site";
 import type { Locale } from "@/content/types";
 import { t } from "@/lib/i18n";
 import { sectionId } from "@/lib/routes";
 
 /**
- * How contractors reach Omar: call, text and (once content/site.ts has it) email with a Copy button.
+ * How contractors reach Omar: call and text, plus email with a Copy button when content/site.ts has an
+ * address (today it's `{ kind: "none" }`: call and text only).
  * No form on this site. `content` is only overridden by tests.
  */
 export function Contact({ locale, content = site }: { locale: Locale; content?: SiteContent }) {
   const { contact } = home;
   const id = sectionId("contact", locale);
-  const { phone, email } = content;
+  const { phone } = content;
+  const email = emailAddress(content.email);
   const mailto = email ? `mailto:${email}?subject=${encodeURIComponent(t(contact.mailSubject, locale))}` : null;
 
   return (

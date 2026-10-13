@@ -25,8 +25,13 @@ describe("Contact block", () => {
     expect(container.querySelector("form, input, textarea")).toBeNull();
   });
 
-  it("leaves out the email row and Copy button while site.email is null", () => {
-    render(<Contact locale="en" content={{ ...site, email: null }} />);
+  it("publishes no email on the real site (Omar prefers calls)", () => {
+    render(<Contact locale="en" />);
+    expect(document.querySelector('a[href^="mailto:"]')).toBeNull();
+  });
+
+  it("shows call and text only when site.email is none on purpose", () => {
+    render(<Contact locale="en" content={{ ...site, email: { kind: "none", reason: "test" } }} />);
     expect(screen.queryByText(t(contact.email, "en"))).toBeNull();
     expect(screen.queryByRole("button", { name: t(contact.copy, "en") })).toBeNull();
     expect(document.querySelector('a[href^="mailto:"]')).toBeNull();

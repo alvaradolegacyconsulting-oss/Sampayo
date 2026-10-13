@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { site, type SiteContent } from "@/content/site";
+import { emailAddress, site, type SiteContent } from "@/content/site";
 import { defaultLocale, locales, type Locale, type Text } from "@/content/types";
 import { ui } from "@/content/ui";
 import { localeTag, t } from "@/lib/i18n";
@@ -84,7 +84,7 @@ export function sitemapEntries(origin: string) {
 
 /**
  * schema.org RoofingContractor, built only from content. No street address (none is published):
- * areaServed instead. Email, social links and license appear only once content/site.ts has them.
+ * areaServed instead. Email, social links and license appear only when content/site.ts has them.
  */
 export function buildBusinessJsonLd(locale: Locale, origin: string, content: SiteContent = site) {
   const sameAs = [...Object.values(content.social), content.videosUrl].filter((link): link is string => Boolean(link));
@@ -102,7 +102,7 @@ export function buildBusinessJsonLd(locale: Locale, origin: string, content: Sit
     areaServed: content.areaServedPlaces.map((place) => ({ "@type": place.type, name: place.name })),
     knowsLanguage: locales.map((code) => localeTag[code]),
     image: absoluteUrl(origin, ogImagePath[locale]),
-    ...(content.email ? { email: content.email } : {}),
+    ...(emailAddress(content.email) ? { email: emailAddress(content.email) } : {}),
     ...(content.licenseNumber ? { hasCredential: { "@type": "EducationalOccupationalCredential", credentialCategory: "license", identifier: content.licenseNumber } } : {}),
     ...(sameAs.length > 0 ? { sameAs } : {}),
   };

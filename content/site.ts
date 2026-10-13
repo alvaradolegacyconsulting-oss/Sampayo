@@ -1,5 +1,14 @@
 import { drafted, type Text } from "./types";
 
+/**
+ * No email on purpose. This is an answer, not a pending question, so the production gate passes:
+ * the contact section shows call and text only. `reason` is for whoever reads this file next.
+ */
+export type NoEmail = { kind: "none"; reason: string };
+
+/** The address to publish, or null when there is none on purpose. */
+export const emailAddress = (email: string | NoEmail): string | null => (typeof email === "string" ? email : null);
+
 export type SiteContent = {
   /** Production origin, https and no trailing slash. */
   url: string;
@@ -12,8 +21,8 @@ export type SiteContent = {
   phone: { display: string; tel: string };
   /** The person contractors talk to. */
   contactName: string;
-  /** Inbox for project requests. null until Omar confirms it; nothing shows it yet. */
-  email: string | null;
+  /** Inbox for project requests, shown with a Copy button, or `{ kind: "none" }` for call and text only. */
+  email: string | NoEmail;
   /** Each link appears in the footer and JSON-LD only once it's set. */
   social: { facebook: string | null; instagram: string | null; youtube: string | null; tiktok: string | null };
   /** "Watch project videos" in the gallery appears only once this is set. */
@@ -38,7 +47,7 @@ export const site: SiteContent = {
   ),
   phone: { display: "612-840-7865", tel: "+16128407865" },
   contactName: "Omar Sampayo",
-  email: null,
+  email: { kind: "none", reason: "Omar prefers calls: contractors call or text (Jose, Oct 13)." },
   social: { facebook: null, instagram: null, youtube: null, tiktok: null },
   videosUrl: null,
   licenseNumber: null,
