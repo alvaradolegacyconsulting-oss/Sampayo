@@ -2,6 +2,7 @@ import { fileURLToPath } from "node:url";
 import { gallery } from "../content/gallery";
 import { home } from "../content/home";
 import { site } from "../content/site";
+import { hasPhoto } from "../content/types";
 import { findPhotoProblems, findSiteProblems } from "../lib/content-checks";
 
 // Runs before every build (npm "prebuild"), previews included: a mistyped phone number or a missing
@@ -10,6 +11,7 @@ const photos = [
   { path: "home.hero.photo", photo: home.hero.photo },
   ...home.services.items.map((item, index) => ({ path: `home.services.items[${index}].photo`, photo: item.photo })),
   ...gallery.map((photo, index) => ({ path: `gallery[${index}]`, photo })),
+  ...home.process.steps.flatMap((step, index) => (hasPhoto(step.photo) ? [{ path: `home.process.steps[${index}].photo`, photo: step.photo }] : [])),
 ];
 
 const problems = [...findSiteProblems(site), ...findPhotoProblems(photos, fileURLToPath(new URL("../public", import.meta.url)))];

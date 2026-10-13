@@ -1,4 +1,4 @@
-import { drafted, fromLiveSite, given, placeholder, type Photo, type Text } from "./types";
+import { drafted, fromLiveSite, given, placeholder, type NoPhoto, type Photo, type Text } from "./types";
 
 // Every home-page section in order. Pages on the live site: "/" and "/services-1" are Spanish,
 // "/home" and "/services" are English. Copy that speaks to homeowners was dropped (contractors only).
@@ -11,7 +11,13 @@ export type TrustItem = { title: Text; body: Text };
 export type ServiceId = "replacement" | "repair" | "storm" | "gutters";
 export type ServiceItem = { id: ServiceId; title: Text; body: Text; photo: Photo };
 export type Point = { title: Text; body: Text };
-export type Step = { title: Text; body: Text };
+/**
+ * `photo: { kind: "none" }` renders the step without one, on purpose. The old site's four process photos
+ * are AI-generated (invented people, a fake proposal) and are never used; real job photos replace "none".
+ */
+export type Step = { title: Text; body: Text; photo: Photo | NoPhoto };
+
+const noPhoto: NoPhoto = { kind: "none" };
 export type FaqItem = { question: Text; answer: Text };
 
 const servicePhoto = (file: string, es: string, en: string): Photo => ({
@@ -203,6 +209,7 @@ export const home = {
           "We assess the roof and document conditions with hands-on checks and photos, with a report you can pass to the owner.",
           GL,
         ),
+        photo: noPhoto,
       },
       {
         title: drafted("Cotización desglosada", "Line-item bid", GL),
@@ -211,6 +218,7 @@ export const home = {
           "A clear, itemized bid with material recommendations for the Minnesota climate, ready to fold into your project.",
           GL,
         ),
+        photo: noPhoto,
       },
       {
         title: drafted("Construcción", "Build", GL),
@@ -219,6 +227,7 @@ export const home = {
           "We protect the property and install the roof system to manufacturer standards, start to finish, on your schedule.",
           GL,
         ),
+        photo: noPhoto,
       },
       {
         /** Was "Final Certification" on the old site; renamed so it doesn't suggest a formal credential. */
@@ -228,6 +237,7 @@ export const home = {
           "A magnetic nail sweep and a joint walkthrough, so the job is clean and ready for your sign-off.",
           GL,
         ),
+        photo: noPhoto,
       },
     ] satisfies Step[],
   },

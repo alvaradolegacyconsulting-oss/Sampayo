@@ -1,6 +1,7 @@
 import { Section } from "@/components/Section";
+import { SitePhoto } from "@/components/SitePhoto";
 import { home } from "@/content/home";
-import type { Locale } from "@/content/types";
+import { hasPhoto, type Locale } from "@/content/types";
 import { t } from "@/lib/i18n";
 import { sectionId } from "@/lib/routes";
 
@@ -14,6 +15,9 @@ export function Process({ locale }: { locale: Locale }) {
       <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
         {process.steps.map((step, index) => (
           <li key={step.title.en} className="border-t-2 border-copper-light/50 pt-4">
+            {hasPhoto(step.photo) && (
+              <SitePhoto photo={step.photo} locale={locale} sizes="(min-width: 1024px) 17rem, (min-width: 640px) 50vw, 100vw" className="mb-4" />
+            )}
             <p aria-hidden="true" className="text-3xl font-extrabold text-copper-light">
               {stepNumber(index)}
             </p>
