@@ -3,6 +3,7 @@ import { site } from "@/content/site";
 import type { Locale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { t } from "@/lib/i18n";
+import { newTabLinkProps } from "@/lib/links";
 
 const networks = ["facebook", "instagram", "youtube", "tiktok"] as const;
 
@@ -36,7 +37,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               <ul className="flex flex-wrap gap-x-5 text-sm font-bold sm:justify-end">
                 {socialLinks.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href} className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-copper-light" target="_blank" rel="noreferrer">
+                    <a href={link.href} className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-copper-light" {...newTabLinkProps}>
                       {link.label}
                       <span className="sr-only"> {t(ui.common.opensInNewTab, locale)}</span>
                     </a>

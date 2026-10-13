@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { newTabLinkProps } from "@/lib/links";
 
 export type ButtonVariant = "primary" | "outline" | "light" | "outlineLight";
 
@@ -28,7 +29,7 @@ export function ButtonLink({
   const external = href.startsWith("http");
 
   return (
-    <a href={href} className={`${buttonClasses(variant)} ${className}`} {...(external ? { target: "_blank", rel: "noreferrer" } : {})}>
+    <a href={href} className={`${buttonClasses(variant)} ${className}`} {...(external ? newTabLinkProps : {})}>
       {children}
     </a>
   );

@@ -6,6 +6,7 @@ import { site } from "@/content/site";
 import type { Locale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { t } from "@/lib/i18n";
+import { newTabLinkProps } from "@/lib/links";
 import { sectionId } from "@/lib/routes";
 
 /** Real job photos. The videos link appears only once content/site.ts has videosUrl. */
@@ -22,8 +23,7 @@ export function Gallery({ locale }: { locale: Locale }) {
         site.videosUrl && (
           <a
             href={site.videosUrl}
-            target="_blank"
-            rel="noreferrer"
+            {...newTabLinkProps}
             className="inline-flex min-h-11 items-center gap-1 text-navy underline underline-offset-4 hover:text-copper"
           >
             {t(text.videos, locale)}
