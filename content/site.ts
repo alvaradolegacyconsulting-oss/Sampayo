@@ -1,4 +1,4 @@
-import { drafted, type Text } from "./types";
+import { drafted, type Locale, type Text } from "./types";
 
 /**
  * No email on purpose. This is an answer, not a pending question, so the production gate passes:
@@ -6,8 +6,8 @@ import { drafted, type Text } from "./types";
  */
 export type NoEmail = { kind: "none"; reason: string };
 
-/** A logo file in public/images/logo/ (transparent PNG), its pixel size and what it says. */
-export type LogoImage = { src: string; width: number; height: number; alt: Text };
+/** A logo file in public/images/logo/ (transparent PNG) and its pixel size. */
+export type LogoImage = { src: string; width: number; height: number };
 
 export type SocialNetwork = "facebook" | "instagram" | "youtube" | "tiktok";
 export type SocialLinks = Record<SocialNetwork, string | null>;
@@ -40,8 +40,11 @@ export type SiteContent = {
    * light backgrounds only: the logo's white house fronts are transparent.
    */
   logo: {
-    /** About section: the whole logo, with Philippians 4:13. The header uses the text wordmark. */
-    full: LogoImage;
+    /**
+     * About section: the whole logo, with Philippians 4:13, one file per language (each page shows its
+     * own). `alt` describes each language's file, verse included. The header uses the text wordmark.
+     */
+    full: { image: Record<Locale, LogoImage>; alt: Text };
   };
   description: Text;
   phone: { display: string; tel: string };
@@ -69,13 +72,15 @@ export const site: SiteContent = {
   wordmark: { main: "Sampayo", sub: "Construction, LLP" },
   logo: {
     full: {
-      src: "/images/logo/sampayo-logo-full.png",
-      width: 880,
-      height: 690,
+      image: {
+        en: { src: "/images/logo/sampayo-logo-full.png", width: 880, height: 690 },
+        // The English-verse logo until a Spanish logo with a correct verse arrives (see docs/PHOTOS.md).
+        es: { src: "/images/logo/sampayo-logo-full.png", width: 880, height: 690 },
+      },
       alt: drafted(
         "Logotipo de Sampayo: casas bajo una brújula, con Filipenses 4:13 en inglés: “I can do all things through Christ who strengthens me”",
         "Sampayo logo: houses under a compass, with Philippians 4:13: “I can do all things through Christ who strengthens me”",
-        "Logo description. The verse in the logo is in English in both languages.",
+        "Logo description. Each language describes its own logo file (site.logo.full.image).",
       ),
     },
   },

@@ -10,9 +10,10 @@
 //       --quality N                    JPEG quality (default 82); lower it for a photo over ~500 KB
 //     docs/PHOTOS.md records the command used for every photo on the site.
 //
-//   npm run images -- logo <original logo.jpg>
-//     Cuts the transparent PNG content/site.ts points at from Sampayo's 976x976 navy/copper logo: the
-//     full logo with Philippians 4:13, for the About section. (The header uses the text wordmark.)
+//   npm run images -- logo <original logo.jpg> <public/images/logo/name.png>
+//     Cuts a transparent PNG from one of Sampayo's 976x976 navy/copper logos (English or Spanish
+//     verse): the full logo with Philippians 4:13, for the About section. (The header uses the text
+//     wordmark.)
 //
 // Originals never go in the repo: they live in ~/Documents/Clients/sampayo-originals/.
 // Relative imports only: runs under tsx, which doesn't resolve the "@/" alias.
@@ -23,12 +24,10 @@ import sharp, { type Sharp } from "sharp";
 const PHOTO_LONG_EDGE = 2400;
 const JPEG = { quality: 82, mozjpeg: true } as const;
 
-// Crop boxes measured on the 976x976 source: SAMPAYO spans x=80-900, compass "N" starts y=115, the star rule under SAMPAYO
+// Crop box measured on the 976x976 source: SAMPAYO spans x=80-900, compass "N" starts y=115, the star rule under SAMPAYO
 // ends y=620, the verse's last line ("Philippians 4:13") ends y=780.
 const LOGO_SOURCE_SIZE = 976;
-const LOGO_OUTPUTS = {
-  full: { file: "public/images/logo/sampayo-logo-full.png", crop: { left: 50, top: 105, width: 880, height: 690 } },
-};
+const LOGO_CROP = { left: 50, top: 105, width: 880, height: 690 };
 // The house fronts and highlights are the paper's own white, so they key out too: the file is for
 // light backgrounds only (the white About section), never navy.
 // The paper isn't flat white: it has texture and darker corners. Each pixel is compared with the
@@ -167,25 +166,22 @@ async function keyOutPaper(input: string) {
   return sharp(out, { raw: { width, height, channels: 4 } }).png().toBuffer();
 }
 
-async function logo(input: string) {
+async function logo(input: string, output: string) {
   const meta = await sharp(input).metadata();
   if (meta.width !== LOGO_SOURCE_SIZE || meta.height !== LOGO_SOURCE_SIZE) {
-    throw new Error(`Expected a ${LOGO_SOURCE_SIZE}x${LOGO_SOURCE_SIZE} logo, got ${meta.width}x${meta.height}. Re-measure the crop boxes.`);
+    throw new Error(`Expected a ${LOGO_SOURCE_SIZE}x${LOGO_SOURCE_SIZE} logo, got ${meta.width}x${meta.height}. Re-measure the crop box.`);
   }
-  const keyed = await keyOutPaper(input);
-  for (const { file, crop } of Object.values(LOGO_OUTPUTS)) {
-    ensureDir(file);
-    // Never enlarged: the source is 976px, and the site shows these smaller than their crop.
-    await sharp(keyed).extract(crop).png({ compressionLevel: 9, palette: false }).toFile(file);
-    await report(file);
-  }
+  ensureDir(output);
+  // Never enlarged: the source is 976px, and the site shows it smaller than the crop.
+  await sharp(await keyOutPaper(input)).extract(LOGO_CROP).png({ compressionLevel: 9, palette: false }).toFile(output);
+  await report(output);
 }
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);
   if (command === "photo" && args.length >= 2) return photo(args[0], args[1], parsePhotoOptions(args.slice(2)));
-  if (command === "logo" && args.length === 1) return logo(args[0]);
-  console.error("Usage:\n  npm run images -- photo <original> <public/images/name.jpg> [--blur l,t,w,h]... [--crop l,t,w,h] [--min-width N] [--quality N]\n  npm run images -- logo <original logo>");
+  if (command === "logo" && args.length === 2) return logo(args[0], args[1]);
+  console.error("Usage:\n  npm run images -- photo <original> <public/images/name.jpg> [--blur l,t,w,h]... [--crop l,t,w,h] [--min-width N] [--quality N]\n  npm run images -- logo <original logo> <public/images/logo/name.png>");
   process.exitCode = 1;
 }
 

@@ -15,6 +15,7 @@ import { sectionId } from "@/lib/routes";
 export function WhyUs({ locale }: { locale: Locale }) {
   const { whyUs } = home;
   const id = sectionId("whyUs", locale);
+  const logo = site.logo.full.image[locale];
 
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className="bg-white py-14 text-ink sm:py-20">
@@ -31,10 +32,10 @@ export function WhyUs({ locale }: { locale: Locale }) {
         </div>
         <div>
           <Image
-            src={site.logo.full.src}
+            src={logo.src}
             alt={t(site.logo.full.alt, locale)}
-            width={site.logo.full.width}
-            height={site.logo.full.height}
+            width={logo.width}
+            height={logo.height}
             sizes="(min-width: 640px) 20rem, 80vw"
             className="mx-auto mb-8 h-auto w-4/5 max-w-xs"
           />
