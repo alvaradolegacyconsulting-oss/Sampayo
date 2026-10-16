@@ -14,7 +14,7 @@ the row, and send it back. Your edits come back as small content changes, then t
   Tell us if you'd like a different version.
 - Text used in more than one place is listed once; the "Where" column names the other places.
 
-104 pieces of text; every one has both languages.
+105 pieces of text; every one has both languages.
 
 ## Menus and labels
 
@@ -168,6 +168,7 @@ the row, and send it back. Your edits come back as small content changes, then t
 
 | Where | English | Español |
 |---|---|---|
+| `site.logo.full.alt` | Sampayo logo: houses under a compass, with Philippians 4:13: “I can do all things through Christ who strengthens me” | Logotipo de Sampayo: casas bajo una brújula, con Filipenses 4:13 en inglés: “I can do all things through Christ who strengthens me” |
 | `site.description` | Roofing subcontractor for general contractors and builders in the Twin Cities. Tear-offs, new installs, repairs and storm volume work, insured and on schedule. | Subcontratista de techado para contratistas generales y constructores en las Ciudades Gemelas. Remociones, instalaciones nuevas, reparaciones y trabajo por volumen de tormentas, con seguro y a tiempo. |
 | `site.areaServed` | The Twin Cities metro | El área metropolitana de las Ciudades Gemelas |
 | `ui.homePage.title` | Roofing subcontractor in Minnesota | Subcontratista de techado en Minnesota |

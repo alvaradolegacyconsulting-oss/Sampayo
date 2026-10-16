@@ -10,6 +10,10 @@
 //       --quality N                    JPEG quality (default 82); lower it for a photo over ~500 KB
 //     docs/PHOTOS.md records the command used for every photo on the site.
 //
+//   npm run images -- logo <original logo.jpg>
+//     Cuts the two transparent PNGs content/site.ts points at from Sampayo's 976x976 navy/copper logo:
+//     the header mark (compass, houses, SAMPAYO; no verse) and the full logo with Philippians 4:13.
+//
 // Originals never go in the repo: they live in ~/Documents/Clients/sampayo-originals/.
 // Relative imports only: runs under tsx, which doesn't resolve the "@/" alias.
 import { mkdirSync, statSync } from "node:fs";
@@ -18,6 +22,23 @@ import sharp, { type Sharp } from "sharp";
 
 const PHOTO_LONG_EDGE = 2400;
 const JPEG = { quality: 82, mozjpeg: true } as const;
+
+// Crop boxes measured on the 976x976 source: SAMPAYO spans x=80-900, compass "N" starts y=115, the star rule under SAMPAYO
+// ends y=620, the verse's last line ("Philippians 4:13") ends y=780.
+const LOGO_SOURCE_SIZE = 976;
+const LOGO_OUTPUTS = {
+  mark: { file: "public/images/logo/sampayo-mark.png", crop: { left: 50, top: 105, width: 880, height: 525 } },
+  full: { file: "public/images/logo/sampayo-logo-full.png", crop: { left: 50, top: 105, width: 880, height: 690 } },
+};
+// The house fronts and highlights are the paper's own white, so they key out too: both files are for
+// light backgrounds only (the white header and About section), never navy.
+// The paper isn't flat white: it has texture and darker corners. Each pixel is compared with the
+// paper around it (brightest value within PAPER_RADIUS, smoothed), so shading doesn't turn into a smudge.
+const PAPER_RADIUS = 24;
+// Darker than the local paper by less than KEY_START reads as paper texture (transparent); by more than
+// KEY_START + KEY_RANGE, fully ink. In between is the anti-aliased edge.
+const KEY_START = 14;
+const KEY_RANGE = 46;
 
 function ensureDir(file: string) {
   mkdirSync(dirname(file), { recursive: true });
@@ -100,10 +121,72 @@ async function photo(input: string, output: string, options: PhotoOptions) {
   await report(output);
 }
 
+/** One channel, filtered along rows then columns with `step` (a sliding max or mean over 2r+1 pixels). */
+function separable(plane: Float32Array, width: number, height: number, r: number, step: (values: number[]) => number) {
+  const pass = (src: Float32Array, horizontal: boolean) => {
+    const out = new Float32Array(src.length);
+    const [outer, inner] = horizontal ? [height, width] : [width, height];
+    for (let o = 0; o < outer; o++) {
+      for (let i = 0; i < inner; i++) {
+        const values: number[] = [];
+        for (let k = Math.max(0, i - r); k <= Math.min(inner - 1, i + r); k++) {
+          values.push(src[horizontal ? o * width + k : k * width + o]);
+        }
+        out[horizontal ? o * width + i : i * width + o] = step(values);
+      }
+    }
+    return out;
+  };
+  return pass(pass(plane, true), false);
+}
+
+/**
+ * The logo on a transparent background. Alpha comes from how much darker each pixel is than the paper
+ * around it; the ink color is then un-mixed from the paper (C = a·F + (1 − a)·P, solved for F) so the
+ * edges carry no white halo on any background.
+ */
+async function keyOutPaper(input: string) {
+  const { data, info } = await sharp(input).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height } = info;
+  const n = width * height;
+  const channel = (c: number) => Float32Array.from({ length: n }, (_, i) => data[i * 3 + c]);
+  const max = (values: number[]) => Math.max(...values);
+  const mean = (values: number[]) => values.reduce((sum, v) => sum + v, 0) / values.length;
+  const paper = [0, 1, 2].map((c) => separable(separable(channel(c), width, height, PAPER_RADIUS, max), width, height, PAPER_RADIUS, mean));
+  const lum = (r: number, g: number, b: number) => 0.299 * r + 0.587 * g + 0.114 * b;
+
+  const out = Buffer.alloc(n * 4);
+  for (let i = 0; i < n; i++) {
+    const [r, g, b] = [data[i * 3], data[i * 3 + 1], data[i * 3 + 2]];
+    const p = [paper[0][i], paper[1][i], paper[2][i]];
+    const alpha = Math.max(0, Math.min(1, (lum(p[0], p[1], p[2]) - lum(r, g, b) - KEY_START) / KEY_RANGE));
+    [r, g, b].forEach((value, c) => {
+      out[i * 4 + c] = alpha > 0 ? Math.round(Math.max(0, Math.min(255, (value - (1 - alpha) * p[c]) / alpha))) : 0;
+    });
+    out[i * 4 + 3] = Math.round(alpha * 255);
+  }
+  return sharp(out, { raw: { width, height, channels: 4 } }).png().toBuffer();
+}
+
+async function logo(input: string) {
+  const meta = await sharp(input).metadata();
+  if (meta.width !== LOGO_SOURCE_SIZE || meta.height !== LOGO_SOURCE_SIZE) {
+    throw new Error(`Expected a ${LOGO_SOURCE_SIZE}x${LOGO_SOURCE_SIZE} logo, got ${meta.width}x${meta.height}. Re-measure the crop boxes.`);
+  }
+  const keyed = await keyOutPaper(input);
+  for (const { file, crop } of Object.values(LOGO_OUTPUTS)) {
+    ensureDir(file);
+    // Never enlarged: the source is 976px, and the site shows these smaller than their crop.
+    await sharp(keyed).extract(crop).png({ compressionLevel: 9, palette: false }).toFile(file);
+    await report(file);
+  }
+}
+
 async function main() {
   const [command, ...args] = process.argv.slice(2);
   if (command === "photo" && args.length >= 2) return photo(args[0], args[1], parsePhotoOptions(args.slice(2)));
-  console.error("Usage:\n  npm run images -- photo <original> <public/images/name.jpg> [--blur l,t,w,h]... [--crop l,t,w,h] [--min-width N] [--quality N]");
+  if (command === "logo" && args.length === 1) return logo(args[0]);
+  console.error("Usage:\n  npm run images -- photo <original> <public/images/name.jpg> [--blur l,t,w,h]... [--crop l,t,w,h] [--min-width N] [--quality N]\n  npm run images -- logo <original logo>");
   process.exitCode = 1;
 }
 

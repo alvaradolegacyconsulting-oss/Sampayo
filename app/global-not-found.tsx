@@ -23,7 +23,7 @@ export default function GlobalNotFound() {
     <html lang={defaultLocale} className={bodyFont.variable} style={themeCssVariables as CSSProperties}>
       <body>
         <main id="main" className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-10 px-4 py-16">
-          <Logo />
+          <Logo locale={defaultLocale} />
           {builtLocales.map((locale) => (
             <section key={locale} lang={locale}>
               <h1 className="text-3xl font-extrabold tracking-tight text-navy">{t(ui.notFound.title, locale)}</h1>

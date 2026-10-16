@@ -97,7 +97,7 @@ The current Squarespace site renews **April 29, 2027**. Before then:
 content/        All business facts and every piece of text, typed. Edit these, not the components.
   types.ts        defaultLocale (the language switch); Text = { es, en, source }; helpers drafted(),
                   fromLiveSite(), given(), name(), placeholder()
-  site.ts         Name, wordmark, phone, contact person, email, social and video links, license, areas served
+  site.ts         Name, logo files, phone, contact person, email, social and video links, license, areas served
   home.ts         Every home-page section: hero, trust row, services, why us, gallery text, process, FAQ, contact
   gallery.ts      The job photos in "Our work", with the original file name on the old site
   ui.ts           Header, language switch, footer (Philippians 4:13, credit), 404, page title

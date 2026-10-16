@@ -1,10 +1,13 @@
-import { drafted, type Text } from "./types";
+import { drafted, name, type Text } from "./types";
 
 /**
  * No email on purpose. This is an answer, not a pending question, so the production gate passes:
  * the contact section shows call and text only. `reason` is for whoever reads this file next.
  */
 export type NoEmail = { kind: "none"; reason: string };
+
+/** A logo file in public/images/logo/ (transparent PNG), its pixel size and what it says. */
+export type LogoImage = { src: string; width: number; height: number; alt: Text };
 
 export type SocialNetwork = "facebook" | "instagram" | "youtube" | "tiktok";
 export type SocialLinks = Record<SocialNetwork, string | null>;
@@ -30,8 +33,16 @@ export type SiteContent = {
   /** Short name for titles and the wordmark. */
   name: string;
   legalName: string;
-  /** Text logo until the real one arrives: big first line, small second line. */
-  wordmark: { main: string; sub: string };
+  /**
+   * The navy/copper logo (greenlight 006-B), cut by `npm run images -- logo` (docs/PHOTOS.md). Both are
+   * for light backgrounds only: the logo's white house fronts are transparent.
+   */
+  logo: {
+    /** Header: compass, houses and SAMPAYO, no verse. */
+    mark: LogoImage;
+    /** About section: the whole logo, with Philippians 4:13. */
+    full: LogoImage;
+  };
   description: Text;
   phone: { display: string; tel: string };
   /** The person contractors talk to. */
@@ -55,7 +66,19 @@ export const site: SiteContent = {
   url: "https://www.sampayoconstruction.com",
   name: "Sampayo Construction",
   legalName: "Sampayo Construction, LLP",
-  wordmark: { main: "Sampayo", sub: "Construction, LLP" },
+  logo: {
+    mark: { src: "/images/logo/sampayo-mark.png", width: 880, height: 525, alt: name("Sampayo Construction") },
+    full: {
+      src: "/images/logo/sampayo-logo-full.png",
+      width: 880,
+      height: 690,
+      alt: drafted(
+        "Logotipo de Sampayo: casas bajo una brújula, con Filipenses 4:13 en inglés: “I can do all things through Christ who strengthens me”",
+        "Sampayo logo: houses under a compass, with Philippians 4:13: “I can do all things through Christ who strengthens me”",
+        "Logo description. The verse in the logo is in English in both languages.",
+      ),
+    },
+  },
   description: drafted(
     "Subcontratista de techado para contratistas generales y constructores en las Ciudades Gemelas. Remociones, instalaciones nuevas, reparaciones y trabajo por volumen de tormentas, con seguro y a tiempo.",
     "Roofing subcontractor for general contractors and builders in the Twin Cities. Tear-offs, new installs, repairs and storm volume work, insured and on schedule.",

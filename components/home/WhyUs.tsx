@@ -1,12 +1,17 @@
 import { CheckIcon } from "@/components/CheckIcon";
 import { Container, Eyebrow, headingClasses } from "@/components/Section";
+import Image from "next/image";
 import { SitePhoto } from "@/components/SitePhoto";
 import { home } from "@/content/home";
+import { site } from "@/content/site";
 import { hasPhoto, type Locale } from "@/content/types";
 import { t } from "@/lib/i18n";
 import { sectionId } from "@/lib/routes";
 
-/** Heading, intro and job-site photo (when set) on the left, the five points on the right (stacked on phones). */
+/**
+ * Heading, intro and job-site photo (when set) on the left; the full logo, with its verse, above the
+ * five points on the right (stacked on phones).
+ */
 export function WhyUs({ locale }: { locale: Locale }) {
   const { whyUs } = home;
   const id = sectionId("whyUs", locale);
@@ -24,17 +29,27 @@ export function WhyUs({ locale }: { locale: Locale }) {
             <SitePhoto photo={whyUs.photo} locale={locale} sizes="(min-width: 1024px) 34rem, 100vw" className="mt-8" />
           )}
         </div>
-        <ul className="divide-y divide-line border-y border-line">
-          {whyUs.points.map((point) => (
-            <li key={point.title.en} className="flex gap-3 py-4">
-              <CheckIcon className="mt-0.5 size-5 shrink-0 text-copper" />
-              <div>
-                <p className="font-bold text-navy">{t(point.title, locale)}</p>
-                <p className="mt-1 text-sm leading-relaxed text-muted">{t(point.body, locale)}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <Image
+            src={site.logo.full.src}
+            alt={t(site.logo.full.alt, locale)}
+            width={site.logo.full.width}
+            height={site.logo.full.height}
+            sizes="(min-width: 640px) 20rem, 80vw"
+            className="mx-auto mb-8 h-auto w-4/5 max-w-xs"
+          />
+          <ul className="divide-y divide-line border-y border-line">
+            {whyUs.points.map((point) => (
+              <li key={point.title.en} className="flex gap-3 py-4">
+                <CheckIcon className="mt-0.5 size-5 shrink-0 text-copper" />
+                <div>
+                  <p className="font-bold text-navy">{t(point.title, locale)}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted">{t(point.body, locale)}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </Container>
     </section>
   );

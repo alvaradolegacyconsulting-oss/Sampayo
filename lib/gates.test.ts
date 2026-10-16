@@ -9,10 +9,9 @@ describe("PLACEHOLDERS_RESOLVED", () => {
     expect(findPlaceholders({ a: "fine", n: null, x: 3 })).toEqual([]);
   });
 
-  it("fails today, listing the open questions (expected until Omar answers)", () => {
+  it("passes the real content: every open question is answered", () => {
     const [placeholders] = runGates(content);
-    expect(placeholders.problems.length).toBeGreaterThan(0);
-    expect(placeholders.problems.join("\n")).toContain("openQuestions");
+    expect(placeholders.problems).toEqual([]);
   });
 });
 

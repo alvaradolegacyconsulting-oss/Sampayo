@@ -5,6 +5,4 @@
  * Omar's review of docs/REVIEW.md (including the Spanish verse version) isn't listed: it gates Spanish
  * on production through content/site.ts translationsReviewed instead, so English can launch first.
  */
-export const openQuestions: string[] = [
-  "[PLACEHOLDER: logo file: is Logo+Verse+English.jpg from the live site the logo? (text wordmark until then)]",
-];
+export const openQuestions: string[] = [];

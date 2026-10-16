@@ -15,7 +15,9 @@ const photos = [
   ...home.process.steps.flatMap((step, index) => (hasPhoto(step.photo) ? [{ path: `home.process.steps[${index}].photo`, photo: step.photo }] : [])),
 ];
 
-const problems = [...findSiteProblems(site), ...findPhotoProblems(photos, fileURLToPath(new URL("../public", import.meta.url)))];
+const logos = Object.entries(site.logo).map(([key, image]) => ({ path: `site.logo.${key}`, photo: image }));
+
+const problems = [...findSiteProblems(site), ...findPhotoProblems([...photos, ...logos], fileURLToPath(new URL("../public", import.meta.url)))];
 if (problems.length > 0) {
   console.error("Content check failed. Fix these in content/:");
   for (const problem of problems) console.error(`- ${problem}`);

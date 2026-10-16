@@ -17,7 +17,7 @@ export function SiteHeader({ route, locale }: { route: RouteKey; locale: Locale 
     <header className="sticky top-0 z-30 border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <a href={href(route, locale)} aria-label={t(ui.common.homeLink, locale)} className="rounded-md">
-          <Logo />
+          <Logo locale={locale} />
         </a>
 
         <div className="flex items-center gap-2 lg:gap-6">

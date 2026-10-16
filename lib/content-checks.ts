@@ -21,7 +21,7 @@ export function findSiteProblems(site: SiteContent): string[] {
 }
 
 /** A photo path that doesn't exist in public/ would show a broken image. Placeholders are fine. */
-export function findPhotoProblems(photos: { path: string; photo: Photo }[], publicDir: string): string[] {
+export function findPhotoProblems(photos: { path: string; photo: Pick<Photo, "src"> }[], publicDir: string): string[] {
   return photos.flatMap(({ path, photo }) => {
     if (isPlaceholder(photo.src)) return [];
     if (!photo.src.startsWith("/images/")) return [`${path}.src "${photo.src}" must start with /images/`];

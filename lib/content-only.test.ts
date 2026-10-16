@@ -17,7 +17,7 @@ function sourceFiles(dir: string): string[] {
 const files = ["components", "app", "lib"].flatMap(sourceFiles);
 
 // Facts taken from content itself, so this keeps working for the next client.
-const facts = [site.name, site.legalName, site.wordmark.main, site.contactName, site.phone.display, site.phone.tel, "Minnesota", "Minneapolis"];
+const facts = [site.name, site.legalName, site.contactName, site.phone.display, site.phone.tel, "Minnesota", "Minneapolis"];
 
 describe("CONTENT_ONLY", () => {
   it("scans a real set of files", () => {
