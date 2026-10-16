@@ -6,5 +6,6 @@ export const reviewNotes: string[] = [
   "- The site claims no license, no drone inspections and no area outside the Twin Cities metro. If any of",
   "  that should change, tell us and we'll add it.",
   "- The Bible verse is the NKJV in English and the **Reina-Valera 1960** in Spanish (`ui.footer.verse`).",
+  "  The Spanish logo in the About section shows the same Reina-Valera 1960 wording, word for word.",
   "  Tell us if you'd like a different version.",
 ];

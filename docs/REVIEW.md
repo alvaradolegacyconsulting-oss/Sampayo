@@ -11,6 +11,7 @@ the row, and send it back. Your edits come back as small content changes, then t
 - The site claims no license, no drone inspections and no area outside the Twin Cities metro. If any of
   that should change, tell us and we'll add it.
 - The Bible verse is the NKJV in English and the **Reina-Valera 1960** in Spanish (`ui.footer.verse`).
+  The Spanish logo in the About section shows the same Reina-Valera 1960 wording, word for word.
   Tell us if you'd like a different version.
 - Text used in more than one place is listed once; the "Where" column names the other places.
 
@@ -168,7 +169,7 @@ the row, and send it back. Your edits come back as small content changes, then t
 
 | Where | English | Español |
 |---|---|---|
-| `site.logo.full.alt` | Sampayo logo: houses under a compass, with Philippians 4:13: “I can do all things through Christ who strengthens me” | Logotipo de Sampayo: casas bajo una brújula, con Filipenses 4:13 en inglés: “I can do all things through Christ who strengthens me” |
+| `site.logo.full.alt` | Sampayo logo: houses under a compass, with Philippians 4:13: “I can do all things through Christ who strengthens me” | Logotipo de Sampayo: casas bajo una brújula, con Filipenses 4:13: “Todo lo puedo en Cristo que me fortalece” |
 | `site.description` | Roofing subcontractor for general contractors and builders in the Twin Cities. Tear-offs, new installs, repairs and storm volume work, insured and on schedule. | Subcontratista de techado para contratistas generales y constructores en las Ciudades Gemelas. Remociones, instalaciones nuevas, reparaciones y trabajo por volumen de tormentas, con seguro y a tiempo. |
 | `site.areaServed` | The Twin Cities metro | El área metropolitana de las Ciudades Gemelas |
 | `ui.homePage.title` | Roofing subcontractor in Minnesota | Subcontratista de techado en Minnesota |

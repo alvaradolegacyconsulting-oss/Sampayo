@@ -74,11 +74,11 @@ export const site: SiteContent = {
     full: {
       image: {
         en: { src: "/images/logo/sampayo-logo-full.png", width: 880, height: 690 },
-        // The English-verse logo until a Spanish logo with a correct verse arrives (see docs/PHOTOS.md).
-        es: { src: "/images/logo/sampayo-logo-full.png", width: 880, height: 690 },
+        // Verse in Spanish, Reina-Valera 1960: the same words as ui.footer.verse (Jose, Oct 16).
+        es: { src: "/images/logo/sampayo-logo-full-es.png", width: 880, height: 690 },
       },
       alt: drafted(
-        "Logotipo de Sampayo: casas bajo una brújula, con Filipenses 4:13 en inglés: “I can do all things through Christ who strengthens me”",
+        "Logotipo de Sampayo: casas bajo una brújula, con Filipenses 4:13: “Todo lo puedo en Cristo que me fortalece”",
         "Sampayo logo: houses under a compass, with Philippians 4:13: “I can do all things through Christ who strengthens me”",
         "Logo description. Each language describes its own logo file (site.logo.full.image).",
       ),
