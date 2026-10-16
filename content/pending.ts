@@ -9,5 +9,4 @@ export const openQuestions: string[] = [
   "[PLACEHOLDER: social links: Facebook, Instagram, YouTube, TikTok (content/site.ts social)]",
   "[PLACEHOLDER: project video link (content/site.ts videosUrl)]",
   "[PLACEHOLDER: logo file: is Logo+Verse+English.jpg from the live site the logo? (text wordmark until then)]",
-  "[PLACEHOLDER: team photo]",
 ];

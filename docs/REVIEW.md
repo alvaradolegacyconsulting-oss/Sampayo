@@ -14,7 +14,7 @@ the row, and send it back. Your edits come back as small content changes, then t
   Tell us if you'd like a different version.
 - Text used in more than one place is listed once; the "Where" column names the other places.
 
-103 pieces of text; every one has both languages.
+104 pieces of text; every one has both languages.
 
 ## Menus and labels
 
@@ -41,7 +41,7 @@ the row, and send it back. Your edits come back as small content changes, then t
 | `home.hero.heading` | Roofing crews Minnesota contractors can count on. | Cuadrillas de techado con las que los contratistas de Minnesota pueden contar. |
 | `home.hero.intro` | Sampayo Construction is a roofing subcontractor for general contractors and builders across the Twin Cities: tear-offs, new installs, repairs and storm-volume work, residential and commercial. | Sampayo Construction es un subcontratista de techado para contratistas generales y constructores en las Ciudades Gemelas: remociones, instalaciones nuevas, reparaciones y trabajo por volumen de tormentas, residencial y comercial. |
 | `home.hero.call` | Call Omar | Llamar a Omar |
-| `home.hero.photo.alt` | Sampayo crew working on a roof | Cuadrilla de Sampayo trabajando en un techo |
+| `home.hero.photo.alt` | Our crew tearing off old roofing at the eave over new OSB decking, with a lake behind | Nuestra cuadrilla retirando el techo viejo en el alero, sobre cubierta nueva de OSB, con un lago al fondo |
 
 ## At a glance
 
@@ -85,6 +85,7 @@ the row, and send it back. Your edits come back as small content changes, then t
 | `home.whyUs.eyebrow` | Why contractors work with us | Por qué los contratistas trabajan con nosotros |
 | `home.whyUs.heading` | Five-plus years as a trusted roofing sub. | Más de cinco años como subcontratista de confianza. |
 | `home.whyUs.intro` | For more than five years, Sampayo Construction has worked as a roofing subcontractor for general contractors and builders across the Twin Cities. Our installers, foremen and project leads bring specialized training and on-site experience, so your projects finish safely, on schedule and built to withstand Minnesota winters. | Desde hace más de cinco años, Sampayo Construction trabaja como subcontratista de techado para contratistas generales y constructores en las Ciudades Gemelas. Nuestros instaladores, capataces y líderes de proyecto aportan capacitación especializada y experiencia en obra, para que sus proyectos se terminen con seguridad, a tiempo y preparados para resistir los inviernos de Minnesota. |
+| `home.whyUs.photo.alt` | One of our tear-offs: shingle bundles staged on new underlayment, tarps protecting the landscaping and a dumpster in the driveway | Una de nuestras obras: paquetes de tejas sobre la membrana nueva, lonas protegiendo el jardín y un contenedor de escombros en la entrada |
 | `home.whyUs.points[0].title` | Fully insured | Totalmente asegurados |
 | `home.whyUs.points[0].body` | Insured and covered by workers' compensation: no liability gaps on your job. | Asegurados y con cobertura de compensación laboral: sin vacíos de responsabilidad en su obra. |
 | `home.whyUs.points[1].title` | On time | A tiempo |

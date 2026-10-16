@@ -43,9 +43,14 @@ export const home = {
     /** "{phone}" is filled in from content/site.ts if the label uses it. */
     call: drafted("Llamar a Omar", "Call Omar", GL),
     details: drafted("Solicitar cotización", "Request a bid", GL),
+    /** Omar's crew (Jose, Oct 16). docs/PHOTOS.md has how it was prepared. */
     photo: {
-      src: placeholder("crew-at-work photo on a roof").en,
-      alt: drafted("Cuadrilla de Sampayo trabajando en un techo", "Sampayo crew working on a roof"),
+      src: "/images/crew/crew-roof-deck.jpg",
+      alt: drafted(
+        "Nuestra cuadrilla retirando el techo viejo en el alero, sobre cubierta nueva de OSB, con un lago al fondo",
+        "Our crew tearing off old roofing at the eave over new OSB decking, with a lake behind",
+        "Photo description",
+      ),
       width: 1600,
       height: 1200,
       kind: "real",
@@ -148,8 +153,18 @@ export const home = {
       "For more than five years, Sampayo Construction has worked as a roofing subcontractor for general contractors and builders across the Twin Cities. Our installers, foremen and project leads bring specialized training and on-site experience, so your projects finish safely, on schedule and built to withstand Minnesota winters.",
       GL,
     ),
-    /** Under the About paragraph: a real job site (tarps over the landscaping, the dumpster), or none. */
-    photo: noPhoto as Photo | NoPhoto,
+    /** Under the About paragraph: a real Sampayo job site (Jose, Oct 16), house number blurred (docs/PHOTOS.md). */
+    photo: {
+      src: "/images/crew/tearoff-jobsite.jpg",
+      alt: drafted(
+        "Una de nuestras obras: paquetes de tejas sobre la membrana nueva, lonas protegiendo el jardín y un contenedor de escombros en la entrada",
+        "One of our tear-offs: shingle bundles staged on new underlayment, tarps protecting the landscaping and a dumpster in the driveway",
+        "Photo description",
+      ),
+      width: 1600,
+      height: 1200,
+      kind: "real",
+    } as Photo | NoPhoto,
     points: [
       {
         title: drafted("Totalmente asegurados", "Fully insured"),

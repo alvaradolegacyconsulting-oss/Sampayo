@@ -92,11 +92,12 @@ File: `content/home.ts`. Photos go in `public/images/services/`.
 
 | Photo | Field | Shape |
 |---|---|---|
-| Hero (crew on a roof) | `hero.photo` | 4:3 |
+| Hero (crew on a roof, in `public/images/crew/`) | `hero.photo` | 4:3 |
+| Job site under "Why contractors work with us" (in `public/images/crew/`) | `whyUs.photo` | 4:3 |
 | Each service card | `services.items[…].photo` | 4:3 |
 
 For a service card, change the file name in `servicePhoto("roof-repair.jpg", "Spanish description", "English description")`.
-For the hero or the gutter card (both placeholders today), replace the whole `photo: { ... }` block with:
+For the hero, the job-site photo or the gutter card, replace the whole `photo: { ... }` block with:
 
 ```ts
 photo: {
@@ -104,11 +105,15 @@ photo: {
   alt: drafted("Descripción en español", "English description"),
   width: 1600,
   height: 1200,
+  kind: "real",
 },
 ```
 
-`width` and `height` are the photo's real size in pixels. Until a real photo is set, the page shows a
-labelled box saying which photo is missing.
+`width` and `height` are the photo's real size in pixels (`npm run images` prints them). `kind` is
+`"real"` for Sampayo's own job or crew photos; their description may say "our crew". A licensed stock
+photo is `kind: "stock"` with `sourceUrl: "<the photo's page on the stock site>"`, and its description
+says only what's in the picture, never "our crew" or "our work". Until a real photo is set, the page
+shows a labelled box saying which photo is missing.
 
 ## Add social links or the videos link
 
