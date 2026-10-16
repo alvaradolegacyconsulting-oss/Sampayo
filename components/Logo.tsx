@@ -1,20 +1,15 @@
-import Image from "next/image";
 import { site } from "@/content/site";
-import type { Locale } from "@/content/types";
-import { t } from "@/lib/i18n";
 
-/** The header mark (compass, houses, SAMPAYO). On light backgrounds only: see content/site.ts logo. */
-export function Logo({ locale }: { locale: Locale }) {
-  const { mark } = site.logo;
+/** The header wordmark, as live text (Jose, Oct 16). The image logo is in the About section only. */
+export function Logo({ dark = false }: { dark?: boolean }) {
   return (
-    <Image
-      src={mark.src}
-      alt={t(mark.alt, locale)}
-      width={mark.width}
-      height={mark.height}
-      sizes="5.5rem"
-      priority
-      className="h-12 w-auto sm:h-14"
-    />
+    <span className="flex flex-col leading-none">
+      <span className={`text-xl font-extrabold uppercase tracking-[0.04em] sm:text-[1.375rem] ${dark ? "text-white" : "text-navy"}`}>
+        {site.wordmark.main}
+      </span>
+      <span className={`mt-1 text-[0.625rem] font-bold uppercase tracking-[0.14em] ${dark ? "text-copper-light" : "text-copper"}`}>
+        {site.wordmark.sub}
+      </span>
+    </span>
   );
 }

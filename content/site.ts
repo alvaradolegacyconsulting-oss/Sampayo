@@ -1,4 +1,4 @@
-import { drafted, name, type Text } from "./types";
+import { drafted, type Text } from "./types";
 
 /**
  * No email on purpose. This is an answer, not a pending question, so the production gate passes:
@@ -33,14 +33,14 @@ export type SiteContent = {
   /** Short name for titles and the wordmark. */
   name: string;
   legalName: string;
+  /** Header wordmark, as live text: big first line, small second line. */
+  wordmark: { main: string; sub: string };
   /**
-   * The navy/copper logo (greenlight 006-B), cut by `npm run images -- logo` (docs/PHOTOS.md). Both are
-   * for light backgrounds only: the logo's white house fronts are transparent.
+   * The navy/copper logo (greenlight 006-B), cut by `npm run images -- logo` (docs/PHOTOS.md). For
+   * light backgrounds only: the logo's white house fronts are transparent.
    */
   logo: {
-    /** Header: compass, houses and SAMPAYO, no verse. */
-    mark: LogoImage;
-    /** About section: the whole logo, with Philippians 4:13. */
+    /** About section: the whole logo, with Philippians 4:13. The header uses the text wordmark. */
     full: LogoImage;
   };
   description: Text;
@@ -66,8 +66,8 @@ export const site: SiteContent = {
   url: "https://www.sampayoconstruction.com",
   name: "Sampayo Construction",
   legalName: "Sampayo Construction, LLP",
+  wordmark: { main: "Sampayo", sub: "Construction, LLP" },
   logo: {
-    mark: { src: "/images/logo/sampayo-mark.png", width: 880, height: 525, alt: name("Sampayo Construction") },
     full: {
       src: "/images/logo/sampayo-logo-full.png",
       width: 880,

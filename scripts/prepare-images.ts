@@ -11,8 +11,8 @@
 //     docs/PHOTOS.md records the command used for every photo on the site.
 //
 //   npm run images -- logo <original logo.jpg>
-//     Cuts the two transparent PNGs content/site.ts points at from Sampayo's 976x976 navy/copper logo:
-//     the header mark (compass, houses, SAMPAYO; no verse) and the full logo with Philippians 4:13.
+//     Cuts the transparent PNG content/site.ts points at from Sampayo's 976x976 navy/copper logo: the
+//     full logo with Philippians 4:13, for the About section. (The header uses the text wordmark.)
 //
 // Originals never go in the repo: they live in ~/Documents/Clients/sampayo-originals/.
 // Relative imports only: runs under tsx, which doesn't resolve the "@/" alias.
@@ -27,11 +27,10 @@ const JPEG = { quality: 82, mozjpeg: true } as const;
 // ends y=620, the verse's last line ("Philippians 4:13") ends y=780.
 const LOGO_SOURCE_SIZE = 976;
 const LOGO_OUTPUTS = {
-  mark: { file: "public/images/logo/sampayo-mark.png", crop: { left: 50, top: 105, width: 880, height: 525 } },
   full: { file: "public/images/logo/sampayo-logo-full.png", crop: { left: 50, top: 105, width: 880, height: 690 } },
 };
-// The house fronts and highlights are the paper's own white, so they key out too: both files are for
-// light backgrounds only (the white header and About section), never navy.
+// The house fronts and highlights are the paper's own white, so they key out too: the file is for
+// light backgrounds only (the white About section), never navy.
 // The paper isn't flat white: it has texture and darker corners. Each pixel is compared with the
 // paper around it (brightest value within PAPER_RADIUS, smoothed), so shading doesn't turn into a smudge.
 const PAPER_RADIUS = 24;
