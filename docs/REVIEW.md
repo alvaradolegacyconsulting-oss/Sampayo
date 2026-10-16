@@ -76,7 +76,7 @@ the row, and send it back. Your edits come back as small content changes, then t
 | `home.services.items[2].photo.alt` | Crew staging shingle bundles along the ridge | Cuadrilla subiendo paquetes de tejas a lo largo de la cumbrera |
 | `home.services.items[3].title` | Gutter systems | Sistemas de canaletas |
 | `home.services.items[3].body` | Gutters and downspouts installed alongside the roof, so the job is finished in one visit. | Canaletas y bajantes instaladas junto con el techo, para terminar el trabajo en una sola visita. |
-| `home.services.items[3].photo.alt` | Gutters and downspouts along the eave of a house | Canaletas y bajantes en el alero de una casa |
+| `home.services.items[3].photo.alt` | White gutter and downspout along the eave of a blue-sided house, beside a brick chimney | Canaleta blanca y bajante en el alero de una casa de revestimiento azul, junto a una chimenea de ladrillo |
 
 ## Why contractors work with us (and About)
 

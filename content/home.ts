@@ -1,4 +1,4 @@
-import { drafted, fromLiveSite, given, placeholder, type NoPhoto, type Photo, type Text } from "./types";
+import { drafted, fromLiveSite, given, type NoPhoto, type Photo, type Text } from "./types";
 
 // Every home-page section in order. Pages on the live site: "/" and "/services-1" are Spanish,
 // "/home" and "/services" are English. Copy that speaks to homeowners was dropped (contractors only).
@@ -133,12 +133,18 @@ export const home = {
           GL,
         ),
         photo: {
-          src: placeholder("gutter photo (none in the live gallery)").en,
+          src: "/images/stock/gutter-downspout.jpg",
           // A licensed stock photo stands in here (greenlight 006-B), so the alt describes the photo, not Sampayo's work.
-          alt: drafted("Canaletas y bajantes en el alero de una casa", "Gutters and downspouts along the eave of a house"),
-          width: 1600,
-          height: 1200,
+          alt: drafted(
+            "Canaleta blanca y bajante en el alero de una casa de revestimiento azul, junto a una chimenea de ladrillo",
+            "White gutter and downspout along the eave of a blue-sided house, beside a brick chimney",
+            "Photo description",
+          ),
+          width: 2400,
+          height: 1800,
           kind: "stock",
+          // Unsplash License, photo by Zachary Keimig. No real gutter photo in Omar's gallery yet.
+          sourceUrl: "https://unsplash.com/photos/a-blue-house-with-a-red-brick-chimney-gvt-wjGk4S4",
         },
       },
     ] satisfies ServiceItem[],
