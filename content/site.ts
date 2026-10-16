@@ -65,7 +65,7 @@ export type SiteContent = {
 };
 
 export const site: SiteContent = {
-  translationsReviewed: false,
+  translationsReviewed: true,
   url: "https://www.sampayoconstruction.com",
   name: "Sampayo Construction",
   legalName: "Sampayo Construction, LLP",
