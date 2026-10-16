@@ -1,11 +1,12 @@
 import { CheckIcon } from "@/components/CheckIcon";
 import { Container, Eyebrow, headingClasses } from "@/components/Section";
+import { SitePhoto } from "@/components/SitePhoto";
 import { home } from "@/content/home";
-import type { Locale } from "@/content/types";
+import { hasPhoto, type Locale } from "@/content/types";
 import { t } from "@/lib/i18n";
 import { sectionId } from "@/lib/routes";
 
-/** Heading and intro on the left, the five points on the right (stacked on phones). */
+/** Heading, intro and job-site photo (when set) on the left, the five points on the right (stacked on phones). */
 export function WhyUs({ locale }: { locale: Locale }) {
   const { whyUs } = home;
   const id = sectionId("whyUs", locale);
@@ -19,6 +20,9 @@ export function WhyUs({ locale }: { locale: Locale }) {
             {t(whyUs.heading, locale)}
           </h2>
           <p className="mt-4 max-w-xl leading-relaxed text-muted">{t(whyUs.intro, locale)}</p>
+          {hasPhoto(whyUs.photo) && (
+            <SitePhoto photo={whyUs.photo} locale={locale} sizes="(min-width: 1024px) 34rem, 100vw" className="mt-8" />
+          )}
         </div>
         <ul className="divide-y divide-line border-y border-line">
           {whyUs.points.map((point) => (

@@ -148,6 +148,8 @@ export const home = {
       "For more than five years, Sampayo Construction has worked as a roofing subcontractor for general contractors and builders across the Twin Cities. Our installers, foremen and project leads bring specialized training and on-site experience, so your projects finish safely, on schedule and built to withstand Minnesota winters.",
       GL,
     ),
+    /** Under the About paragraph: a real job site (tarps over the landscaping, the dumpster), or none. */
+    photo: noPhoto as Photo | NoPhoto,
     points: [
       {
         title: drafted("Totalmente asegurados", "Fully insured"),
