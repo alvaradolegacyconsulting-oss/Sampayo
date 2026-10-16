@@ -3,7 +3,7 @@ import { emailAddress, site, type SiteContent } from "@/content/site";
 import { defaultLocale, locales, type Locale, type Text } from "@/content/types";
 import { ui } from "@/content/ui";
 import { localeTag, t } from "@/lib/i18n";
-import { otherLocale, routeKeys, routes, type RouteKey } from "@/lib/routes";
+import { builtLocales, otherLocale, routeKeys, routes, type RouteKey } from "@/lib/routes";
 
 type VercelEnv = Partial<Record<"VERCEL_ENV" | "VERCEL_BRANCH_URL" | "VERCEL_URL", string>> & Record<string, string | undefined>;
 
@@ -26,9 +26,16 @@ const pageText: Record<RouteKey, { title: Text; description: Text }> = {
   home: { title: ui.homePage.title, description: site.description },
 };
 
-/** hreflang alternates for a page: both languages, with the default language for everyone else. */
-export function languageAlternates(route: RouteKey): Record<string, string> {
-  return { es: routes[route].es, en: routes[route].en, "x-default": routes[route][defaultLocale] };
+/**
+ * hreflang alternates for a page: each language the build serves, with the default language for
+ * everyone else. None while the build serves one language: there is nothing to point to.
+ */
+export function languageAlternates(route: RouteKey, languages: readonly Locale[] = builtLocales): Record<string, string> | undefined {
+  if (languages.length < 2) return undefined;
+  return {
+    ...Object.fromEntries(languages.map((locale) => [locale, routes[route][locale]])),
+    "x-default": routes[route][defaultLocale],
+  };
 }
 
 /** Base metadata for a root layout; each page adds its own with pageMetadata(). */
@@ -49,7 +56,7 @@ const ogLocale = (locale: Locale) => localeTag[locale].replace("-", "_");
  * Full metadata for one page in one language: title, description, canonical, hreflang, Open Graph and
  * Twitter. Next.js replaces (not merges) a parent's openGraph and twitter objects, so every page sets all of them here.
  */
-export function pageMetadata(route: RouteKey, locale: Locale): Metadata {
+export function pageMetadata(route: RouteKey, locale: Locale, languages: readonly Locale[] = builtLocales): Metadata {
   const { title, description } = pageText[route];
   const fullTitle = `${site.name} | ${t(title, locale)}`;
   const image = { url: ogImagePath[locale], width: 1200, height: 630, type: "image/png", alt: site.legalName };
@@ -57,7 +64,7 @@ export function pageMetadata(route: RouteKey, locale: Locale): Metadata {
   return {
     title: { absolute: fullTitle },
     description: t(description, locale),
-    alternates: { canonical: routes[route][locale], languages: languageAlternates(route) },
+    alternates: { canonical: routes[route][locale], languages: languageAlternates(route, languages) },
     openGraph: {
       title: fullTitle,
       description: t(description, locale),
@@ -65,20 +72,25 @@ export function pageMetadata(route: RouteKey, locale: Locale): Metadata {
       siteName: site.name,
       type: "website",
       locale: ogLocale(locale),
-      alternateLocale: [ogLocale(otherLocale(locale))],
+      alternateLocale: languages.includes(otherLocale(locale)) ? [ogLocale(otherLocale(locale))] : [],
       images: [image],
     },
     twitter: { card: "summary_large_image", title: fullTitle, description: t(description, locale), images: [image] },
   };
 }
 
-/** Every page in both languages, each listing its translation, for app/sitemap.ts. */
-export function sitemapEntries(origin: string) {
+/** Every page in every language the build serves, each listing its translations, for app/sitemap.ts. */
+export function sitemapEntries(origin: string, languages: readonly Locale[] = builtLocales) {
   return routeKeys.flatMap((route) =>
-    locales.map((locale) => ({
-      url: absoluteUrl(origin, routes[route][locale]),
-      alternates: { languages: { es: absoluteUrl(origin, routes[route].es), en: absoluteUrl(origin, routes[route].en) } },
-    })),
+    languages.map((locale) => {
+      const alternates = languageAlternates(route, languages);
+      return {
+        url: absoluteUrl(origin, routes[route][locale]),
+        ...(alternates
+          ? { alternates: { languages: Object.fromEntries(Object.entries(alternates).map(([code, path]) => [code, absoluteUrl(origin, path)])) } }
+          : {}),
+      };
+    }),
   );
 }
 

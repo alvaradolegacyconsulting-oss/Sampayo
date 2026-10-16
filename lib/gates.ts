@@ -1,5 +1,7 @@
 // Relative imports only: scripts/check-production-gates.ts runs this under tsx without the "@/" alias.
-import { PLACEHOLDER, TRANSLATE, isPlaceholder, locales, type Photo } from "../content/types";
+import type { SiteContent } from "../content/site";
+import { PLACEHOLDER, TRANSLATE, defaultLocale, isPlaceholder, locales, type Locale, type Photo } from "../content/types";
+import { publishedLanguages } from "./routes";
 import { findTexts } from "./texts";
 
 /** PLACEHOLDERS_RESOLVED: every string anywhere in content that still contains "[PLACEHOLDER", as "path: text". */
@@ -13,13 +15,14 @@ export function findPlaceholders(value: unknown, path = "content"): string[] {
 }
 
 /**
- * TRANSLATIONS_COMPLETE: every Text has real words in both languages. The type already requires both
- * keys; this catches an empty string or a "[TRANSLATE" marker. There is no fallback to the other language.
+ * TRANSLATIONS_COMPLETE: every Text has real words in each of `languages` (both, by default). The type
+ * already requires both keys; this catches an empty string or a "[TRANSLATE" marker. There is no
+ * fallback to the other language.
  */
-export function findUntranslated(content: Record<string, unknown>): string[] {
+export function findUntranslated(content: Record<string, unknown>, languages: readonly Locale[] = locales): string[] {
   return Object.entries(content).flatMap(([name, value]) =>
     findTexts(value, name).flatMap(({ path, text }) =>
-      locales.flatMap((locale) => {
+      languages.flatMap((locale) => {
         const value = text[locale];
         if (typeof value !== "string" || value.trim() === "") return [`${path}.${locale} is empty`];
         if (value.includes(TRANSLATE)) return [`${path}.${locale}: ${value}`];
@@ -52,11 +55,40 @@ export function findStockPhotos(content: Record<string, unknown>): string[] {
     .map(({ path, photo }) => `${path}: ${photo.src} (source: ${photo.sourceUrl ?? "not recorded"})`);
 }
 
-export type Gate = { name: string; problems: string[] };
+/** A gate's result. `held` explains a pass that only holds because something is kept off production. */
+export type Gate = { name: string; problems: string[]; held?: string };
 
-export function runGates(content: Record<string, unknown>): Gate[] {
+/**
+ * TRANSLATIONS_COMPLETE and TRANSLATIONS_REVIEWED, judged for a production build, using the same
+ * lib/routes.ts publishedLanguages the site is built with. While translationsReviewed is false,
+ * production leaves the other language out, so it can't block: the default language must still be
+ * complete, and the gates say what previews still lack. Once it's true, any missing text blocks.
+ */
+export function translationGates(content: Record<string, unknown>, site: Pick<SiteContent, "translationsReviewed">): Gate[] {
+  const production = publishedLanguages(site, "production");
+  const held = production.length < locales.length;
+  const missingOnPreviews = findUntranslated(content).length;
+
+  return [
+    {
+      name: "TRANSLATIONS_COMPLETE",
+      problems: findUntranslated(content, production),
+      held: held
+        ? `only ${defaultLocale} is built for production; ${missingOnPreviews === 0 ? "every string has both languages on previews" : `${missingOnPreviews} string(s) still missing a language on previews`}`
+        : undefined,
+    },
+    {
+      name: "TRANSLATIONS_REVIEWED",
+      // Guards the mechanism: production must never publish a translation Omar hasn't signed off.
+      problems: !held && !site.translationsReviewed ? ["production would publish unreviewed translations"] : [],
+      held: held ? "translationsReviewed is false: both languages on previews, production builds the default language only (docs/REVIEW.md)" : undefined,
+    },
+  ];
+}
+
+export function runGates(content: Record<string, unknown> & { site: Pick<SiteContent, "translationsReviewed"> }): Gate[] {
   return [
     { name: "PLACEHOLDERS_RESOLVED", problems: Object.entries(content).flatMap(([name, value]) => findPlaceholders(value, name)) },
-    { name: "TRANSLATIONS_COMPLETE", problems: findUntranslated(content) },
+    ...translationGates(content, content.site),
   ];
 }

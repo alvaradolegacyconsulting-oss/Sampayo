@@ -28,16 +28,34 @@ describe("pageMetadata", () => {
     expect(en.openGraph).toMatchObject({ locale: "en_US", images: [{ url: "/og/en" }] });
     expect(en.twitter).toMatchObject({ card: "summary_large_image" });
   });
+
+  it("has no hreflang or Open Graph alternate while the build serves one language", () => {
+    const en = pageMetadata("home", defaultLocale, [defaultLocale]);
+    expect(en.alternates).toEqual({ canonical: routes.home[defaultLocale], languages: undefined });
+    expect(en.openGraph).toMatchObject({ alternateLocale: [] });
+  });
 });
 
 describe("sitemap", () => {
-  it("lists the page in both languages, each with its translation", () => {
-    const entries = sitemapEntries("https://example.com");
+  const origin = "https://example.com";
+
+  it("lists the page in both languages, each with its translations and x-default", () => {
+    const entries = sitemapEntries(origin, ["en", "es"]);
     expect(entries).toHaveLength(2);
     expect(entries).toContainEqual({
-      url: absoluteUrl("https://example.com", routes.home[alternateLocale]),
-      alternates: { languages: { es: absoluteUrl("https://example.com", routes.home.es), en: absoluteUrl("https://example.com", routes.home.en) } },
+      url: absoluteUrl(origin, routes.home[alternateLocale]),
+      alternates: {
+        languages: {
+          en: absoluteUrl(origin, routes.home.en),
+          es: absoluteUrl(origin, routes.home.es),
+          "x-default": absoluteUrl(origin, routes.home[defaultLocale]),
+        },
+      },
     });
+  });
+
+  it("lists only the default language, with no alternates, while production is held to it", () => {
+    expect(sitemapEntries(origin, [defaultLocale])).toEqual([{ url: absoluteUrl(origin, routes.home[defaultLocale]) }]);
   });
 });
 

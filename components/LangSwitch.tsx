@@ -1,10 +1,14 @@
-import { locales, type Locale } from "@/content/types";
+import type { Locale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { t } from "@/lib/i18n";
-import { otherLocale, routes, type RouteKey } from "@/lib/routes";
+import { builtLocales, otherLocale, routes, type RouteKey } from "@/lib/routes";
 
-/** ES | EN: the current language in bold, the other as a link to this same page in it. */
-export function LangSwitch({ route, locale }: { route: RouteKey; locale: Locale }) {
+/**
+ * ES | EN: the current language in bold, the other as a link to this same page in it. Renders nothing
+ * while the build serves one language (production before the Spanish is reviewed).
+ */
+export function LangSwitch({ route, locale, locales = builtLocales }: { route: RouteKey; locale: Locale; locales?: readonly Locale[] }) {
+  if (locales.length < 2) return null;
   const other = otherLocale(locale);
 
   return (

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { content } from "@/content";
 import { drafted, placeholder } from "@/content/types";
-import { collectPhotos, findPlaceholders, findStockPhotos, findUntranslated, runGates } from "@/lib/gates";
+import { collectPhotos, findPlaceholders, findStockPhotos, findUntranslated, runGates, translationGates, type Gate } from "@/lib/gates";
 
 describe("PLACEHOLDERS_RESOLVED", () => {
   it("finds placeholder strings at any depth, with their path", () => {
@@ -51,5 +51,30 @@ describe("TRANSLATIONS_COMPLETE", () => {
 
   it("doesn't count a placeholder as a missing translation (that's the other gate)", () => {
     expect(findUntranslated({ a: placeholder("photo") })).toEqual([]);
+  });
+});
+
+describe("TRANSLATIONS_COMPLETE and TRANSLATIONS_REVIEWED for production", () => {
+  const gate = (gates: Gate[], name: string) => gates.find((g) => g.name === name)!;
+  const missingSpanish = { a: { x: drafted("", "Hello") } };
+  const missingEnglish = { a: { x: drafted("Hola", "") } };
+
+  it("hold, not block, while translationsReviewed is false: production builds the default language only", () => {
+    const gates = translationGates(missingSpanish, { translationsReviewed: false });
+    expect(gate(gates, "TRANSLATIONS_COMPLETE").problems).toEqual([]);
+    expect(gate(gates, "TRANSLATIONS_COMPLETE").held).toContain("1 string(s) still missing a language on previews");
+    expect(gate(gates, "TRANSLATIONS_REVIEWED").problems).toEqual([]);
+    expect(gate(gates, "TRANSLATIONS_REVIEWED").held).toContain("translationsReviewed is false");
+  });
+
+  it("still block on missing default-language text", () => {
+    expect(gate(translationGates(missingEnglish, { translationsReviewed: false }), "TRANSLATIONS_COMPLETE").problems).toEqual(["a.x.en is empty"]);
+  });
+
+  it("block on any missing text once the translations are reviewed", () => {
+    const gates = translationGates(missingSpanish, { translationsReviewed: true });
+    expect(gate(gates, "TRANSLATIONS_COMPLETE").problems).toEqual(["a.x.es is empty"]);
+    expect(gate(gates, "TRANSLATIONS_COMPLETE").held).toBeUndefined();
+    expect(gate(gates, "TRANSLATIONS_REVIEWED").held).toBeUndefined();
   });
 });

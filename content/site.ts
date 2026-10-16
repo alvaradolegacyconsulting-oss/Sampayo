@@ -10,6 +10,12 @@ export type NoEmail = { kind: "none"; reason: string };
 export const emailAddress = (email: string | NoEmail): string | null => (typeof email === "string" ? email : null);
 
 export type SiteContent = {
+  /**
+   * Set to true only after Omar signs off the Spanish (docs/REVIEW.md). While false, previews serve both
+   * languages for review and production builds only the default language (lib/routes.ts
+   * publishedLanguages), so unreviewed drafts never go live and the review doesn't hold up launch.
+   */
+  translationsReviewed: boolean;
   /** Production origin, https and no trailing slash. */
   url: string;
   /** Short name for titles and the wordmark. */
@@ -36,6 +42,7 @@ export type SiteContent = {
 };
 
 export const site: SiteContent = {
+  translationsReviewed: false,
   url: "https://www.sampayoconstruction.com",
   name: "Sampayo Construction",
   legalName: "Sampayo Construction, LLP",

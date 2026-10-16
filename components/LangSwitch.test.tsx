@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { render, screen } from "@testing-library/react";
 import { beforeAll, describe, expect, it } from "vitest";
+import { LangSwitch } from "@/components/LangSwitch";
 import { SiteHeader } from "@/components/SiteHeader";
 import { locales } from "@/content/types";
 import { otherLocale, routeKeys, routes } from "@/lib/routes";
@@ -30,5 +31,12 @@ describe("ES | EN switch", () => {
     for (const link of nav.querySelectorAll("a")) {
       expect(link.getAttribute("href")?.startsWith(`${routes.home[locale]}#`)).toBe(true);
     }
+  });
+});
+
+describe("switch with one language built", () => {
+  it("renders nothing (production before the Spanish is reviewed)", () => {
+    const { container } = render(<LangSwitch route="home" locale="en" locales={["en"]} />);
+    expect(container.innerHTML).toBe("");
   });
 });

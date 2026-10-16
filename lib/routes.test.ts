@@ -2,7 +2,20 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { describe, expect, it } from "vitest";
 import { defaultLocale } from "@/content/types";
-import { alternateLocale, href, otherLocale, pagePaths, routeKeys, routes, routesFor, sections } from "@/lib/routes";
+import {
+  alternateLocale,
+  hasAlternate,
+  href,
+  otherLocale,
+  pagePaths,
+  pagePathsFor,
+  publishedLanguages,
+  routeKeys,
+  routes,
+  routesFor,
+  sections,
+  servedHref,
+} from "@/lib/routes";
 
 const appDir = new URL("../app/", import.meta.url).pathname;
 
@@ -56,5 +69,28 @@ describe("route table", () => {
       const ids = Object.values(sections).map((section) => section[locale]);
       expect(new Set(ids).size).toBe(ids.length);
     }
+  });
+});
+
+// Spanish waits on Omar's review for production only; previews always show both languages.
+describe("publishedLanguages", () => {
+  const drafts = { translationsReviewed: false };
+  const reviewed = { translationsReviewed: true };
+
+  it("builds both languages on previews and local builds, reviewed or not", () => {
+    expect(publishedLanguages(drafts, "preview")).toEqual([defaultLocale, alternateLocale]);
+    expect(publishedLanguages(drafts, undefined)).toEqual([defaultLocale, alternateLocale]);
+  });
+
+  it("builds only the default language for production until the translations are reviewed", () => {
+    expect(publishedLanguages(drafts, "production")).toEqual([defaultLocale]);
+    expect(publishedLanguages(reviewed, "production")).toEqual([defaultLocale, alternateLocale]);
+  });
+
+  it("drops the other language's page and redirect targets when it isn't built", () => {
+    expect(hasAlternate([defaultLocale])).toBe(false);
+    expect(pagePathsFor([defaultLocale])).toEqual(["/"]);
+    expect(servedHref("home", alternateLocale, "work", [defaultLocale])).toBe(href("home", defaultLocale, "work"));
+    expect(servedHref("home", alternateLocale, "work", [defaultLocale, alternateLocale])).toBe(href("home", alternateLocale, "work"));
   });
 });

@@ -9,7 +9,7 @@ if (force || process.env.VERCEL_ENV === "production") {
   const gates = runGates(content);
   for (const gate of gates) {
     if (gate.problems.length === 0) {
-      console.log(`${gate.name}: PASS`);
+      console.log(gate.held ? `${gate.name}: PASS (held: ${gate.held})` : `${gate.name}: PASS`);
       continue;
     }
     console.error(`${gate.name}: FAIL. Resolve these in content/ before production:`);

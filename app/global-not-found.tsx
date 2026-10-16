@@ -6,15 +6,15 @@ import { site } from "@/content/site";
 import { defaultLocale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { t } from "@/lib/i18n";
-import { alternateLocale, href } from "@/lib/routes";
+import { builtLocales, href } from "@/lib/routes";
 import { bodyFont } from "@/theme/fonts";
 import { themeCssVariables } from "@/theme/tokens";
 import "./globals.css";
 
 // With two root layouts there's no single layout to build a 404 from, so this page stands alone
-// (next.config.ts: experimental.globalNotFound). It can't know the visitor's language: default language first.
+// (next.config.ts: experimental.globalNotFound). It can't know the visitor's language: every language the build serves, default first.
 export const metadata: Metadata = {
-  title: `${t(ui.notFound.title, defaultLocale)} · ${t(ui.notFound.title, alternateLocale)} | ${site.name}`,
+  title: `${builtLocales.map((locale) => t(ui.notFound.title, locale)).join(" · ")} | ${site.name}`,
   robots: { index: false },
 };
 
@@ -24,7 +24,7 @@ export default function GlobalNotFound() {
       <body>
         <main id="main" className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-10 px-4 py-16">
           <Logo />
-          {[defaultLocale, alternateLocale].map((locale) => (
+          {builtLocales.map((locale) => (
             <section key={locale} lang={locale}>
               <h1 className="text-3xl font-extrabold tracking-tight text-navy">{t(ui.notFound.title, locale)}</h1>
               <p className="mt-3 text-muted">{t(ui.notFound.body, locale)}</p>

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { redirects } from "@/content/redirects";
 import { findRedirectProblems, toNextRedirects } from "@/lib/redirects";
-import { href, pagePaths, routes } from "@/lib/routes";
+import { pagePaths, routes, servedHref } from "@/lib/routes";
 
 describe("content/redirects.ts", () => {
   it("is valid: unique paths, real targets, no chains", () => {
@@ -13,8 +13,8 @@ describe("content/redirects.ts", () => {
     const to = Object.fromEntries(redirects.map((r) => [r.from, r.to]));
     expect(to["/home"]).toBe(routes.home.en);
     expect(to["/services"]).toBe(`${routes.home.en}#services`);
-    expect(to["/services-1"]).toBe(href("home", "es", "services"));
-    expect(to["/gallery-1"]).toBe(href("home", "es", "work"));
+    expect(to["/services-1"]).toBe(servedHref("home", "es", "services"));
+    expect(to["/gallery-1"]).toBe(servedHref("home", "es", "work"));
   });
 
   it("becomes 301 redirects in next.config", () => {

@@ -1,5 +1,7 @@
 // Relative imports only: next.config.ts loads this file, and it doesn't resolve "@/".
-import { defaultLocale, type Locale } from "../content/types";
+import { site as siteContent, type SiteContent } from "../content/site";
+import { defaultLocale, locales, type Locale } from "../content/types";
+import { isProductionBuild } from "./env";
 
 export function otherLocale(locale: Locale): Locale {
   return locale === "es" ? "en" : "es";
@@ -40,11 +42,48 @@ export const sections = {
 
 export type SectionKey = keyof typeof sections;
 
-export const pagePaths: string[] = routeKeys.flatMap((key) => Object.values(routes[key]));
+/**
+ * The languages this build serves, default first. The one place "previews on, production off" is
+ * decided: both languages are built, except that a production build leaves out the other language
+ * until `translationsReviewed` is true. Everything else (the "/<code>" page, the switch, hreflang,
+ * the sitemap, share images, the 404, redirect targets) reads this result, so there is no second
+ * code path for production.
+ */
+export function publishedLanguages(
+  site: Pick<SiteContent, "translationsReviewed"> = siteContent,
+  vercelEnv: string | undefined = process.env.VERCEL_ENV,
+): Locale[] {
+  const held = isProductionBuild(vercelEnv) && !site.translationsReviewed;
+  return [defaultLocale, ...locales.filter((code) => code !== defaultLocale && !held)];
+}
+
+/** The languages this build serves. */
+export const builtLocales: Locale[] = publishedLanguages();
+
+/** True when this build serves the other language at "/<code>". */
+export function hasAlternate(languages: readonly Locale[] = builtLocales): boolean {
+  return languages.includes(alternateLocale);
+}
+
+/** Every page path in every language the build serves (redirect targets must be one of these). */
+export function pagePathsFor(languages: readonly Locale[]): string[] {
+  return routeKeys.flatMap((key) => languages.map((locale) => routes[key][locale]));
+}
+
+export const pagePaths: string[] = pagePathsFor(builtLocales);
 
 export function href(route: RouteKey, locale: Locale, section?: SectionKey): string {
   const path = routes[route][locale];
   return section ? `${path}#${sections[section][locale]}` : path;
+}
+
+/**
+ * href() in `locale` when this build serves it, otherwise in the default language. For links that must
+ * always land somewhere, like old-URL redirects: a Spanish one goes to the English page while
+ * production is English-only.
+ */
+export function servedHref(route: RouteKey, locale: Locale, section?: SectionKey, languages: readonly Locale[] = builtLocales): string {
+  return href(route, languages.includes(locale) ? locale : defaultLocale, section);
 }
 
 /** The section's anchor id in this language. */
