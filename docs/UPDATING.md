@@ -68,9 +68,17 @@ photo(
 The four parts: the file name in `public/images/gallery/`, where the original came from (the old site's file
 name, or `"Omar, 2026-11"`), then what the picture shows in Spanish and in English.
 
-1. Crop to landscape **4:3** and resize to **1600 × 1200** (on a Mac: Preview → Tools → Adjust Size).
-   Save as `.jpg` with a short lower-case name, no spaces or accents: `hail-job-edina.jpg`.
-2. Put it in `public/images/gallery/`.
+1. Put the original in `~/Documents/Clients/sampayo-originals/` (never in the repo), then make the site
+   copy with a short lower-case name, no spaces or accents. In the VS Code terminal:
+
+   ```
+   npm run images -- photo ~/Documents/Clients/sampayo-originals/IMG_1234.jpg public/images/gallery/hail-job-edina.jpg
+   ```
+
+   It resizes, turns the photo upright and strips everything hidden in the file (GPS location, camera,
+   date). Add `--blur left,top,width,height` for a house number or license plate. The command prints the
+   new size; landscape **4:3** fits the gallery best (add `--crop left,top,width,height` if it isn't).
+2. Add a row to `docs/PHOTOS.md` with the command you ran.
 3. Add or replace a `photo(...)` block. The gallery shows them in this order; six fill two rows on a laptop.
 4. Write the description for someone who can't see the picture ("Crew installing underlayment over new
    decking"), not "photo" or "image".
