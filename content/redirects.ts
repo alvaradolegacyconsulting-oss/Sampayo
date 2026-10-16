@@ -9,7 +9,7 @@ export type Redirect = {
 };
 
 /**
- * Old sampayoconstruction.com URLs that should keep working after cutover, each a 301 (next.config.ts).
+ * Old sampayoconstruction.com URLs that should keep working after cutover, each a 308 (next.config.ts).
  * Paths from the live site's menu on 2026-10-05. Targets come from lib/routes.ts, so they follow the
  * default-language switch: the old English pages always land on the English page, and the old Spanish
  * ones land on the Spanish page when this build serves it (English while production is English-only).

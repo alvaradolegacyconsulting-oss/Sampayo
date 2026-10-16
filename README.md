@@ -101,7 +101,7 @@ content/        All business facts and every piece of text, typed. Edit these, n
   home.ts         Every home-page section: hero, trust row, services, why us, gallery text, process, FAQ, contact
   gallery.ts      The job photos in "Our work", with the original file name on the old site
   ui.ts           Header, language switch, footer (Philippians 4:13, credit), 404, page title
-  redirects.ts    Old Squarespace URLs → new sections (301)
+  redirects.ts    Old Squarespace URLs → new sections (308)
   pending.ts      Open questions; each one blocks production until answered
   index.ts        Every export above, in one object, for the gates and the translations doc
 theme/          tokens.ts (colors, font, radii: the only place hex values live), fonts.ts (Archivo)

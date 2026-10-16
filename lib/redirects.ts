@@ -1,9 +1,9 @@
 // Relative imports only: next.config.ts loads this file, and it doesn't resolve "@/".
 import type { Redirect } from "../content/redirects";
 
-/** Next.js redirect entries. statusCode 301, not `permanent: true`, which would send 308. */
+/** Next.js redirect entries: `permanent: true` sends 308 (Jose, Oct 16). */
 export function toNextRedirects(redirects: Redirect[]) {
-  return redirects.map(({ from, to }) => ({ source: from, destination: to, statusCode: 301 as const }));
+  return redirects.map(({ from, to }) => ({ source: from, destination: to, permanent: true as const }));
 }
 
 /** Everything wrong with the redirect list; empty means it's valid. The build fails on any problem. */

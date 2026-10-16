@@ -17,8 +17,8 @@ describe("content/redirects.ts", () => {
     expect(to["/gallery-1"]).toBe(servedHref("home", "es", "work"));
   });
 
-  it("becomes 301 redirects in next.config", () => {
-    expect(toNextRedirects([{ from: "/old", to: "/" }])).toEqual([{ source: "/old", destination: "/", statusCode: 301 }]);
+  it("becomes 308 (permanent) redirects in next.config", () => {
+    expect(toNextRedirects([{ from: "/old", to: "/" }])).toEqual([{ source: "/old", destination: "/", permanent: true }]);
   });
 });
 

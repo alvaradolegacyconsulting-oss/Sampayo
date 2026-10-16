@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     // Two root layouts (app/(default), app/(alternate)/[alt]) mean no shared layout for a 404; see app/global-not-found.tsx.
     globalNotFound: true,
   },
-  // Old Squarespace URLs → new pages, all 301. Edit content/redirects.ts, not this file.
+  // Old Squarespace URLs → new pages, all 308. Edit content/redirects.ts, not this file.
   async redirects() {
     const problems = findRedirectProblems(redirects, pagePaths);
     if (problems.length > 0) {
