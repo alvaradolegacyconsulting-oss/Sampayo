@@ -14,7 +14,7 @@ the row, and send it back. Your edits come back as small content changes, then t
   Tell us if you'd like a different version.
 - Text used in more than one place is listed once; the "Where" column names the other places.
 
-104 pieces of text; every one has both languages.
+103 pieces of text; every one has both languages.
 
 ## Menus and labels
 
@@ -29,7 +29,7 @@ the row, and send it back. Your edits come back as small content changes, then t
 | `ui.nav.whyUs` | Why us | Por qué nosotros |
 | `ui.nav.work` | Our work | Trabajos |
 | `ui.nav.faq` | FAQ | Preguntas |
-| `ui.nav.cta` | Request availability | Solicitar disponibilidad |
+| `ui.nav.cta` (also `home.hero.details`) | Request a bid | Solicitar cotización |
 | `ui.languageSwitch.label` | Language | Idioma |
 | `ui.languageSwitch.switchTo` | Read this page in English | Ver esta página en español |
 
@@ -41,7 +41,6 @@ the row, and send it back. Your edits come back as small content changes, then t
 | `home.hero.heading` | Roofing crews Minnesota contractors can count on. | Cuadrillas de techado con las que los contratistas de Minnesota pueden contar. |
 | `home.hero.intro` | Sampayo Construction is a roofing subcontractor for general contractors and builders across the Twin Cities: tear-offs, new installs, repairs and storm-volume work, residential and commercial. | Sampayo Construction es un subcontratista de techado para contratistas generales y constructores en las Ciudades Gemelas: remociones, instalaciones nuevas, reparaciones y trabajo por volumen de tormentas, residencial y comercial. |
 | `home.hero.call` | Call Omar | Llamar a Omar |
-| `home.hero.details` | Request a bid | Solicitar cotización |
 | `home.hero.photo.alt` | Sampayo crew working on a roof | Cuadrilla de Sampayo trabajando en un techo |
 
 ## At a glance

@@ -1,3 +1,4 @@
+import { home } from "./home";
 import { drafted, given, name, type Text } from "./types";
 
 /** Site chrome: header, language switch, footer, 404, page titles. Section copy lives in content/home.ts. */
@@ -14,8 +15,8 @@ export const ui = {
     whyUs: given("Por qué nosotros", "Why us"),
     work: given("Trabajos", "Our work"),
     faq: given("Preguntas", "FAQ"),
-    /** Greenlight 006 decision 5: Omar's wording from the live site. */
-    cta: given("Solicitar disponibilidad", "Request availability"),
+    /** The same words as the hero's button (Jose, Oct 16; replaces greenlight 006 decision 5's "Request availability"). */
+    cta: home.hero.details,
   },
   languageSwitch: {
     label: drafted("Idioma", "Language"),

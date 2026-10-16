@@ -16,7 +16,7 @@ const links = [
 ];
 
 function setup() {
-  render(<MobileMenu links={links} cta={{ label: "Request availability", href: "/en#contact" }} label="Menu" navLabel="Main navigation" />);
+  render(<MobileMenu links={links} cta={{ label: "Request a bid", href: "/en#contact" }} label="Menu" navLabel="Main navigation" />);
   return { user: userEvent.setup(), button: screen.getByRole("button", { name: "Menu" }) };
 }
 
@@ -47,11 +47,11 @@ describe("MobileMenu", () => {
     await user.click(button);
     await user.tab(); // Services
     await user.tab(); // FAQ
-    await user.tab(); // Request availability
+    await user.tab(); // Request a bid
     await user.tab(); // wraps to the button
     expect(document.activeElement).toBe(button);
     await user.tab({ shift: true }); // back to the last link
-    expect(document.activeElement?.textContent).toBe("Request availability");
+    expect(document.activeElement?.textContent).toBe("Request a bid");
   });
 
   it("closes on a click outside", async () => {
