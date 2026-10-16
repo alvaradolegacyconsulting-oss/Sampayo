@@ -9,6 +9,7 @@ import { findPhotoProblems, findSiteProblems } from "../lib/content-checks";
 // photo fails here, with a message, instead of breaking the page for visitors.
 const photos = [
   { path: "home.hero.photo", photo: home.hero.photo },
+  ...(hasPhoto(home.whyUs.photo) ? [{ path: "home.whyUs.photo", photo: home.whyUs.photo }] : []),
   ...home.services.items.map((item, index) => ({ path: `home.services.items[${index}].photo`, photo: item.photo })),
   ...gallery.map((photo, index) => ({ path: `gallery[${index}]`, photo })),
   ...home.process.steps.flatMap((step, index) => (hasPhoto(step.photo) ? [{ path: `home.process.steps[${index}].photo`, photo: step.photo }] : [])),
