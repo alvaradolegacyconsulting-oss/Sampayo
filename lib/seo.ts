@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { emailAddress, site, type SiteContent } from "@/content/site";
+import { emailAddress, site, socialLinks, type SiteContent } from "@/content/site";
 import { defaultLocale, locales, type Locale, type Text } from "@/content/types";
 import { ui } from "@/content/ui";
 import { localeTag, t } from "@/lib/i18n";
@@ -99,7 +99,7 @@ export function sitemapEntries(origin: string, languages: readonly Locale[] = bu
  * areaServed instead. Email, social links and license appear only when content/site.ts has them.
  */
 export function buildBusinessJsonLd(locale: Locale, origin: string, content: SiteContent = site) {
-  const sameAs = [...Object.values(content.social), content.videosUrl].filter((link): link is string => Boolean(link));
+  const sameAs = [...Object.values(socialLinks(content.social)), content.videosUrl].filter((link): link is string => Boolean(link));
 
   return {
     "@context": "https://schema.org",

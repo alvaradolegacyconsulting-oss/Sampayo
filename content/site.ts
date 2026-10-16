@@ -6,6 +6,15 @@ import { drafted, type Text } from "./types";
  */
 export type NoEmail = { kind: "none"; reason: string };
 
+export type SocialNetwork = "facebook" | "instagram" | "youtube" | "tiktok";
+export type SocialLinks = Record<SocialNetwork, string | null>;
+/** No social accounts on purpose: an answer, not a pending question, so the production gate passes. */
+export type NoSocial = { kind: "none"; reason: string };
+
+/** The social links to publish (empty when there are none on purpose). */
+export const socialLinks = (social: SocialLinks | NoSocial): Partial<Record<SocialNetwork, string>> =>
+  "kind" in social ? {} : Object.fromEntries(Object.entries(social).filter(([, link]) => link !== null));
+
 /** The address to publish, or null when there is none on purpose. */
 export const emailAddress = (email: string | NoEmail): string | null => (typeof email === "string" ? email : null);
 
@@ -29,8 +38,8 @@ export type SiteContent = {
   contactName: string;
   /** Inbox for project requests, shown with a Copy button, or `{ kind: "none" }` for call and text only. */
   email: string | NoEmail;
-  /** Each link appears in the footer and JSON-LD only once it's set. */
-  social: { facebook: string | null; instagram: string | null; youtube: string | null; tiktok: string | null };
+  /** Each link appears in the footer and JSON-LD only once it's set; `{ kind: "none" }` for no accounts. */
+  social: SocialLinks | NoSocial;
   /** "Watch project videos" in the gallery appears only once this is set. */
   videosUrl: string | null;
   /** Minnesota contractor license number. Not shown (Jose, Oct 13): leave null, and claim no license in copy. */
@@ -55,7 +64,7 @@ export const site: SiteContent = {
   phone: { display: "612-840-7865", tel: "+16128407865" },
   contactName: "Omar Sampayo",
   email: { kind: "none", reason: "Omar prefers calls: contractors call or text (Jose, Oct 13)." },
-  social: { facebook: null, instagram: null, youtube: null, tiktok: null },
+  social: { kind: "none", reason: "Sampayo has no social accounts to publish (Jose, Oct 16)." },
   // None for launch (Jose, Oct 16): no project videos yet, so the gallery has no videos link.
   videosUrl: null,
   licenseNumber: null,

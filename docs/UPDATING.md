@@ -117,7 +117,8 @@ shows a labelled box saying which photo is missing.
 
 ## Add social links or the videos link
 
-File: `content/site.ts`
+File: `content/site.ts`. Today `social` is `{ kind: "none", reason: "…" }` (no accounts, on purpose) and
+`videosUrl` is `null`. To add links, replace them with:
 
 ```ts
 social: { facebook: "https://www.facebook.com/…", instagram: null, youtube: "https://www.youtube.com/@…", tiktok: null },
@@ -127,7 +128,6 @@ videosUrl: "https://www.youtube.com/@…",
 - Each link must start with `https://`. Leave `null` for any network Omar doesn't use.
 - Social links appear in the footer and in the Google listing data. `videosUrl` adds "Watch project videos →"
   above the gallery.
-- Then delete the matching line in `content/pending.ts`.
 
 ## Change the phone number
 

@@ -1,7 +1,7 @@
 // Relative imports only: scripts/check-content.ts loads this under tsx.
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import type { SiteContent } from "../content/site";
+import { socialLinks, type SiteContent } from "../content/site";
 import { isPlaceholder, type Photo } from "../content/types";
 
 /** Everything wrong with content/site.ts that would break a link on the page. */
@@ -13,7 +13,7 @@ export function findSiteProblems(site: SiteContent): string[] {
     problems.push(`site.phone.display "${site.phone.display}" and site.phone.tel "${site.phone.tel}" are different numbers`);
   }
   if (typeof site.email === "string" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(site.email)) problems.push(`site.email "${site.email}" is not an email address (or { kind: "none" })`);
-  const links = { ...site.social, videosUrl: site.videosUrl };
+  const links = { ...socialLinks(site.social), videosUrl: site.videosUrl };
   for (const [key, value] of Object.entries(links)) {
     if (value !== null && !value.startsWith("https://")) problems.push(`site link ${key} "${value}" must start with https:// (or be null)`);
   }

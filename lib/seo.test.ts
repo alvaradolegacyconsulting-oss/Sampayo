@@ -83,7 +83,7 @@ describe("RoofingContractor JSON-LD", () => {
     const filled = buildBusinessJsonLd("en", "https://example.com", {
       ...site,
       email: "a@example.com",
-      social: { ...site.social, facebook: "https://facebook.com/x" },
+      social: { ...{ facebook: null, instagram: null, youtube: null, tiktok: null }, facebook: "https://facebook.com/x" },
     });
     expect(filled).toMatchObject({ email: "a@example.com", sameAs: ["https://facebook.com/x"] });
   });

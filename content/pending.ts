@@ -6,6 +6,5 @@
  * on production through content/site.ts translationsReviewed instead, so English can launch first.
  */
 export const openQuestions: string[] = [
-  "[PLACEHOLDER: social links: Facebook, Instagram, YouTube, TikTok (content/site.ts social)]",
   "[PLACEHOLDER: logo file: is Logo+Verse+English.jpg from the live site the logo? (text wordmark until then)]",
 ];

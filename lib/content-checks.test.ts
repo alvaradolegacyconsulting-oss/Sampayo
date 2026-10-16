@@ -18,7 +18,7 @@ describe("content checks (every build)", () => {
     ["a phone without +1", { ...site, phone: { display: "612-840-7865", tel: "6128407865" } }, "must look like"],
     ["display and tel that disagree", { ...site, phone: { display: "612-840-7866", tel: "+16128407865" } }, "different numbers"],
     ["a malformed email", { ...site, email: "omar@" }, "not an email"],
-    ["an http social link", { ...site, social: { ...site.social, facebook: "http://facebook.com/x" } }, "https://"],
+    ["an http social link", { ...site, social: { ...{ facebook: null, instagram: null, youtube: null, tiktok: null }, facebook: "http://facebook.com/x" } }, "https://"],
     ["a trailing slash on the URL", { ...site, url: "https://www.example.com/" }, "trailing slash"],
   ])("catch %s", (_name, broken, message) => {
     expect(findSiteProblems(broken).join("\n")).toContain(message);

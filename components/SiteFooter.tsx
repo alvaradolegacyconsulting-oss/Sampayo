@@ -1,5 +1,5 @@
 import { Container } from "@/components/Section";
-import { site } from "@/content/site";
+import { site, socialLinks as publishedSocialLinks } from "@/content/site";
 import type { Locale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { t } from "@/lib/i18n";
@@ -10,9 +10,11 @@ const networks = ["facebook", "instagram", "youtube", "tiktok"] as const;
 export function SiteFooter({ locale }: { locale: Locale }) {
   const { footer } = ui;
   // Each network shows up only once content/site.ts has its link.
-  const socialLinks = networks
-    .filter((network) => site.social[network])
-    .map((network) => ({ label: t(footer[network], locale), href: site.social[network] as string }));
+  const links = publishedSocialLinks(site.social);
+  const socialLinks = networks.flatMap((network) => {
+    const link = links[network];
+    return link ? [{ label: t(footer[network], locale), href: link }] : [];
+  });
 
   return (
     <footer className="on-dark bg-navy-deep text-white">
