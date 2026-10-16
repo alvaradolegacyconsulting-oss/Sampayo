@@ -26,7 +26,8 @@ export const redirects: Redirect[] = [
   { from: "/sampayo-construction", to: servedHref("home", "es", "work") },
 ];
 
-/** Redirects still waiting on Jose. Delete each line once it's handled. */
-export const pendingRedirects: string[] = [
-  "[PLACEHOLDER: any other old URLs still shared (business cards, QR codes, Google Business profile)]",
-];
+/**
+ * Redirects still waiting on Jose. Delete each line once it's handled. Empty: no other old URLs are
+ * printed or shared beyond the domain itself, which stays the same (Jose, Oct 16).
+ */
+export const pendingRedirects: string[] = [];
