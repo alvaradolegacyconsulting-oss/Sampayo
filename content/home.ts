@@ -20,6 +20,13 @@ export type Step = { title: Text; body: Text; photo: Photo | NoPhoto };
 const noPhoto: NoPhoto = { kind: "none" };
 export type FaqItem = { question: Text; answer: Text };
 
+/**
+ * No video section, on purpose: nothing renders (no empty box) and it doesn't block production.
+ * "See how we work" (greenlight 006-B, Videos) is built when the HeyGen MP4s arrive; `reason` is
+ * for whoever reads this file next.
+ */
+export type NoVideo = { kind: "none"; reason: string };
+
 const servicePhoto = (file: string, es: string, en: string): Photo => ({
   src: `/images/services/${file}`,
   alt: drafted(es, en, "Photo description"),
@@ -214,6 +221,8 @@ export const home = {
       },
     ] satisfies Point[],
   },
+
+  video: { kind: "none", reason: "Launching without video; it comes back with the HeyGen MP4s (Jose, Oct 16)." } as NoVideo,
 
   gallery: {
     heading: drafted("Trabajos recientes", "Recent work", "Replaces the homeowner-facing heading from preflight 006 (greenlight 006-B: every line speaks to contractors)."),

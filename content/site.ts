@@ -56,6 +56,7 @@ export const site: SiteContent = {
   contactName: "Omar Sampayo",
   email: { kind: "none", reason: "Omar prefers calls: contractors call or text (Jose, Oct 13)." },
   social: { facebook: null, instagram: null, youtube: null, tiktok: null },
+  // None for launch (Jose, Oct 16): no project videos yet, so the gallery has no videos link.
   videosUrl: null,
   licenseNumber: null,
   areaServed: drafted("El área metropolitana de las Ciudades Gemelas", "The Twin Cities metro", "Jose, Oct 13 (greenlight 006-B)."),
