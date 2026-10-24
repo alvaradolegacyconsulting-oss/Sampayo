@@ -21,9 +21,10 @@ export const redirects: Redirect[] = [
   { from: "/services", to: servedHref("home", "en", "services") },
   // "Servicios" (Spanish).
   { from: "/services-1", to: servedHref("home", "es", "services") },
-  { from: "/gallery-1", to: servedHref("home", "es", "work") },
-  // "Videos": no videos embedded today, so it lands on the gallery.
-  { from: "/sampayo-construction", to: servedHref("home", "es", "work") },
+  // "Gallery" (English).
+  { from: "/gallery-1", to: servedHref("home", "en", "work") },
+  // "Videos" (English): no videos embedded today, so it lands on the gallery.
+  { from: "/sampayo-construction", to: servedHref("home", "en", "work") },
 ];
 
 /**

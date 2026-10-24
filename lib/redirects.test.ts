@@ -14,7 +14,8 @@ describe("content/redirects.ts", () => {
     expect(to["/home"]).toBe(routes.home.en);
     expect(to["/services"]).toBe(`${routes.home.en}#services`);
     expect(to["/services-1"]).toBe(servedHref("home", "es", "services"));
-    expect(to["/gallery-1"]).toBe(servedHref("home", "es", "work"));
+    expect(to["/gallery-1"]).toBe(`${routes.home.en}#work`);
+    expect(to["/sampayo-construction"]).toBe(`${routes.home.en}#work`);
   });
 
   it("becomes 308 (permanent) redirects in next.config", () => {
